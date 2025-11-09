@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-// import logo from '../assets/images/logo.png';
+import logo from '../assets/carLogo.png';
 import { AuthContext } from '../providers/AuthProvider';
 import { Link } from 'react-router';
 const Navbar = () => {
@@ -8,8 +8,10 @@ const Navbar = () => {
     <div className="navbar bg-base-100 shadow-sm container px-4 mx-auto">
       <div className="flex-1">
         <Link to="/" className="flex gap-2 items-center">
-          {/* <img className="w-auto h-7" src={logo} alt="" /> */}
-          <span className="font-bold">Rent To Ride</span>
+          <div>
+            <img className="w-24" src={logo} alt="" />
+          </div>
+          {/* <span className="font-bold hidden md:block">Rent To Ride</span> */}
         </Link>
       </div>
       <div className="flex-none">
