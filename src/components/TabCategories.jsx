@@ -1,4 +1,3 @@
-
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import CarCard from './CarCard';
@@ -18,9 +17,9 @@ const TabCategories = () => {
 
         <div className="flex items-center justify-center">
           <TabList>
-            <Tab>SUV</Tab>
-            <Tab>Sedan</Tab>
-            <Tab>Hatchback</Tab>
+            <Tab>Featured Cars</Tab>
+            <Tab>Top Rated Cars</Tab>
+            <Tab>All Cars</Tab>
           </TabList>
         </div>
 
