@@ -4,6 +4,7 @@ import Login from '../pages/Authentication/Login';
 import Register from '../pages/Authentication/Register';
 import Home from '../pages/Home';
 import CarDetails from '../pages/CarDetails';
+import MyBookings from '../pages/MyBookings';
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_API_URL}/car/${params.id}`),
       },
+      { path: '/my-bookings', element: <MyBookings /> },
     ],
   },
 ]);
