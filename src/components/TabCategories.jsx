@@ -1,9 +1,19 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import CarCard from './CarCard';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-const TabCategories = ({ cars }) => {
-  console.log(cars);
+const TabCategories = () => {
+  const [cars, setCars] = useState([]);
+  useEffect(() => {
+    const getData = async () => {
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/cars`);
+      setCars(data);
+    };
+    getData();
+  }, []);
+
   return (
     <Tabs>
       <div className="container px-6 py-10 mx-auto">
@@ -35,7 +45,7 @@ const TabCategories = ({ cars }) => {
         </TabPanel>
 
         <TabPanel>
-          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3">
             {cars
               .filter((c) => c.category === 'Top Rated Cars')
               .map((car) => (
@@ -45,7 +55,7 @@ const TabCategories = ({ cars }) => {
         </TabPanel>
 
         <TabPanel>
-          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3">
             {cars.map((car) => (
               <CarCard key={car._id} car={car} />
             ))}
