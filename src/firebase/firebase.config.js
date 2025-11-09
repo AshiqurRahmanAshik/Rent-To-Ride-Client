@@ -1,12 +1,12 @@
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyA2GvyGF8mIpY-uJ-JGF7Tljr4Kf_xBGyo',
-  authDomain: 'rent-to-ride-e182b.firebaseapp.com',
-  projectId: 'rent-to-ride-e182b',
-  storageBucket: 'rent-to-ride-e182b.appspot.com',
-  messagingSenderId: '695216545947',
-  appId: '1:695216545947:web:5a535cea2bef81c2c3663e',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 export const app = initializeApp(firebaseConfig);

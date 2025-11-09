@@ -4,7 +4,12 @@ import logo from '../../assets/carLogo.png';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../providers/AuthProvider';
 import { toast } from 'react-toastify';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'; // 👈 import icons
+import {
+  AiFillGoogleCircle,
+  AiOutlineEye,
+  AiOutlineEyeInvisible,
+} from 'react-icons/ai';
+import { FcGoogle } from 'react-icons/fc';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -85,7 +90,7 @@ const Login = () => {
             onClick={handleGoogleSignIn}
             className="flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg hover:bg-gray-50"
           >
-            {/* Google SVG here */}
+            <FcGoogle />
             <span className="w-5/6 px-4 py-3 font-bold text-center">
               Sign in with Google
             </span>
