@@ -40,7 +40,7 @@ const CarCard = ({ car }) => {
           <span className="text-blue-600">${pricePerDay}/day</span>
         </div>
 
-        <Link to={`/cars/${car._id}`}>
+        <Link to={`/car/${car._id}`}>
           <button className="w-full mt-3 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition">
             View Details
           </button>
