@@ -1,74 +1,89 @@
 import { useContext } from 'react';
+import { Link } from 'react-router';
 import logo from '../assets/carLogo.png';
 import { AuthContext } from '../providers/AuthProvider';
-import { Link } from 'react-router';
+
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+
   return (
     <div className="navbar bg-base-100 shadow-sm container px-4 mx-auto">
+      {/* Logo */}
       <div className="flex-1">
-        <Link to="/" className="flex gap-2 items-center">
-          <div>
-            <img className="w-24" src={logo} alt="" />
-          </div>
-          {/* <span className="font-bold hidden md:block">Rent To Ride</span> */}
+        <Link to="/" className="flex items-center gap-2">
+          <img className="w-24" src={logo} alt="Logo" />
         </Link>
       </div>
+
+      {/* Navigation Links */}
       <div className="flex-none">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal px-1 gap-2">
           <li>
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/jobs">All Cars</Link>
+            <Link to="/browse-cars">Browse Cars</Link>
           </li>
 
+          {user && (
+            <>
+              <li>
+                <Link to="/add-car">Add Car</Link>
+              </li>
+              <li>
+                <Link to="/my-listings">My Listings</Link>
+              </li>
+              <li>
+                <Link to="/my-bookings">My Bookings</Link>
+              </li>
+            </>
+          )}
+
           {!user && (
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
+            <>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/signup">Signup</Link>
+              </li>
+            </>
           )}
         </ul>
 
+        {/* User Dropdown */}
         {user && (
-          <div className="dropdown dropdown-end z-50">
+          <div className="dropdown dropdown-end ml-4 z-50">
             <div
               tabIndex={0}
               role="button"
               className="btn btn-ghost btn-circle avatar"
             >
-              <div title={user?.displayName} className="w-10 rounded-full">
+              <div className="w-10 rounded-full">
                 <img
                   referrerPolicy="no-referrer"
-                  alt="User Profile Photo"
-                  src={user?.photoURL}
+                  src={user.photoURL}
+                  alt="User Profile"
                 />
               </div>
             </div>
+
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-1 p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <Link to="/my-bookings" className="justify-between">
-                  My Bookings
-                </Link>
+                <span className="font-medium">{user.displayName}</span>
               </li>
               <li>
-                <Link to="/my-posted-jobs">My Posted Jobs</Link>
-              </li>
-              <li>
-                <Link to="/my-bids">My Bids</Link>
-              </li>
-              <li>
-                <Link to="/bid-requests">Bid Requests</Link>
+                <span className="text-sm text-gray-500">{user.email}</span>
               </li>
               <li className="mt-2">
                 <button
                   onClick={logOut}
-                  className="bg-gray-200 block text-center"
+                  className="w-full text-center bg-gray-200 py-1 rounded"
                 >
-                  Logout
+                  Log Out
                 </button>
               </li>
             </ul>
