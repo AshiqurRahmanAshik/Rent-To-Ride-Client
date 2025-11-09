@@ -9,7 +9,11 @@ export const router = createBrowserRouter([
     path: '/',
     element: <Root />,
     children: [
-      { index: true, element: <Home /> },
+      {
+        index: true,
+        element: <Home />,
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/cars`),
+      },
       { path: '/login', element: <Login /> },
       { path: '/register', element: <Register /> },
     ],

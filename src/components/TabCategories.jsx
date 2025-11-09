@@ -2,7 +2,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import CarCard from './CarCard';
 
-const TabCategories = () => {
+const TabCategories = ({ cars }) => {
+  console.log(cars);
   return (
     <Tabs>
       <div className="container px-6 py-10 mx-auto">
@@ -24,29 +25,30 @@ const TabCategories = () => {
         </div>
 
         <TabPanel>
-          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
+          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 ">
+            {cars
+              .filter((c) => c.category === 'Featured Cars')
+              .map((car) => (
+                <CarCard key={car._id} car={car} />
+              ))}
           </div>
         </TabPanel>
 
         <TabPanel>
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <CarCard />
-            <CarCard />
+            {cars
+              .filter((c) => c.category === 'Top Rated Cars')
+              .map((car) => (
+                <CarCard key={car._id} car={car} />
+              ))}
           </div>
         </TabPanel>
 
         <TabPanel>
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
-            <CarCard />
+            {cars.map((car) => (
+              <CarCard key={car._id} car={car} />
+            ))}
           </div>
         </TabPanel>
       </div>
