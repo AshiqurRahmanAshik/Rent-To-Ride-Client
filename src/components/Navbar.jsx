@@ -29,7 +29,7 @@ const Navbar = () => {
           {user && (
             <>
               <li>
-                <Link to="/add-car">Add Car</Link>
+                <Link to="/add-car">Add Your Car</Link>
               </li>
               <li>
                 <Link to="/my-listings">My Listings</Link>
@@ -55,7 +55,7 @@ const Navbar = () => {
         {user && (
           <div className="dropdown dropdown-end ml-4 z-50">
             <div tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
+              <div className="w-10 rounded-full" title={user?.displayName}>
                 <img
                   referrerPolicy="no-referrer"
                   src={user.photoURL}

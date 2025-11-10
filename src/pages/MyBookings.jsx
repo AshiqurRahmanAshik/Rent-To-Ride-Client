@@ -1,56 +1,61 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
+import { AuthContext } from '../providers/AuthProvider';
 
 const MyBookings = () => {
+  const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
+    if (!user) return;
+
     const fetchBookings = async () => {
-      try {
-        const { data } = await axios.get(
-          `${import.meta.env.VITE_API_URL}/bookings`
-        );
-        setBookings(data);
-      } catch (error) {
-        console.error('Error fetching bookings:', error);
-      }
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/my-bookings?email=${user.email}`
+      );
+      setBookings(data);
     };
     fetchBookings();
-  }, []);
+  }, [user]);
 
   return (
-    <div className="max-w-4xl mx-auto py-10 px-4">
-      <h1 className="text-2xl font-semibold text-gray-800 mb-6">My Bookings</h1>
-
-      {bookings.length === 0 ? (
-        <p className="text-gray-500">No bookings found.</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {bookings.map((booking) => (
-            <div
-              key={booking._id}
-              className="p-4 bg-white shadow-md rounded-md"
-            >
-              <h2 className="text-lg font-bold text-blue-600">
-                Car ID: {booking.carId}
-              </h2>
-              <p className="text-gray-700">Email: {booking.email}</p>
-              <p className="text-gray-700">
-                Start: {new Date(booking.startingDate).toLocaleDateString()}
-              </p>
-              <p className="text-gray-700">
-                End: {new Date(booking.endDate).toLocaleDateString()}
-              </p>
-              <p className="text-gray-600 italic">
-                Comment: {booking.comment || 'N/A'}
-              </p>
-              <p className="mt-2 font-semibold text-green-600">
-                Status: {booking.status}
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
+    <div className="max-w-6xl mx-auto py-10 px-4">
+      <h1 className="text-2xl font-semibold mb-6">My Bookings</h1>
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white border border-gray-200">
+          <thead className="bg-gray-100">
+            <tr>
+              <th>Car</th>
+              <th>Category</th>
+              <th>Rent Price</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {bookings.map((b) => (
+              <tr key={b._id} className="text-center">
+                <td className="py-2 px-4 border-b flex items-center justify-center gap-2">
+                  <img
+                    src={b.image}
+                    alt={b.carName}
+                    className="w-16 h-10 object-cover rounded"
+                  />
+                  {b.carName}
+                </td>
+                <td className="py-2 px-4 border-b">{b.category}</td>
+                <td className="py-2 px-4 border-b">${b.rentPrice}</td>
+                <td className="py-2 px-4 border-b">
+                  {new Date(b.startingDate).toLocaleDateString()}
+                </td>
+                <td className="py-2 px-4 border-b">
+                  {new Date(b.endDate).toLocaleDateString()}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
