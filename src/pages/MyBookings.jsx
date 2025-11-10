@@ -45,34 +45,45 @@ const MyBookings = () => {
   return (
     <div className="max-w-6xl mx-auto py-10 px-4">
       <h1 className="text-2xl font-semibold mb-6">My Bookings</h1>
-      <div className="space-y-4">
-        {bookings.map((b) => (
-          <div
-            key={b._id}
-            className="bg-white border rounded-lg p-4 shadow-md flex justify-between items-center"
-          >
-            <div className="flex items-center gap-4">
-              <img
-                src={b.image}
-                alt={b.carName}
-                className="w-20 h-20 object-cover rounded"
-              />
-              <div>
-                <h2 className="font-semibold">{b.carName}</h2>
-                <p className="text-gray-600">{b.category}</p>
-                <p className="text-gray-600">
-                  ${Number(b.rentPrice).toFixed(2)}/day
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={() => handleRemove(b._id)}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded"
-            >
-              Unbook
-            </button>
-          </div>
-        ))}
+
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white border rounded-lg shadow-md">
+          <thead>
+            <tr className="bg-gray-100 text-left">
+              <th className="px-4 py-2 border-b">Image</th>
+              <th className="px-4 py-2 border-b">Car Name</th>
+              <th className="px-4 py-2 border-b">Category</th>
+              <th className="px-4 py-2 border-b">Price/Day</th>
+              <th className="px-4 py-2 border-b">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {bookings.map((b) => (
+              <tr key={b._id} className="hover:bg-gray-50">
+                <td className="px-4 py-2 border-b">
+                  <img
+                    src={b.image}
+                    alt={b.carName}
+                    className="w-20 h-20 object-cover rounded"
+                  />
+                </td>
+                <td className="px-4 py-2 border-b">{b.carName}</td>
+                <td className="px-4 py-2 border-b">{b.category}</td>
+                <td className="px-4 py-2 border-b">
+                  ${Number(b.rentPrice).toFixed(2)}
+                </td>
+                <td className="px-4 py-2 border-b">
+                  <button
+                    onClick={() => handleRemove(b._id)}
+                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded"
+                  >
+                    Unbook
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
