@@ -9,6 +9,7 @@ import MyListings from '../pages/MyListings';
 import AddCar from '../pages/AddCar';
 import PrivateRoute from '../routes/PrivateRoute'; // add this
 import ErrorPage from '../pages/ErrorPage';
+import BrowseCars from '../pages/BrowseCars';
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: '/login', element: <Login /> },
       { path: '/register', element: <Register /> },
+      { path: '/browse-cars', element: <BrowseCars /> },
 
       // Car Details with loader
       {
