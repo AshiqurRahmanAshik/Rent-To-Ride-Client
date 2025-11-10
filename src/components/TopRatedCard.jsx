@@ -8,7 +8,7 @@ const TopRatedCard = ({ car }) => {
       <img
         src={car.image}
         alt={car.name}
-        className="w-full h-48 object-cover"
+        className="w-10 h-48 object-contain"
       />
       <div className="p-5">
         <h3 className="text-xl font-semibold text-gray-800">{car.name}</h3>

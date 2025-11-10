@@ -1,19 +1,18 @@
 import { Link } from 'react-router';
 
 const CarCard = ({ car }) => {
-  const { category, model, name, pricePerDay, providerName } = car || {};
+  const { category, model, name, pricePerDay, provider } = car || {};
 
   return (
     <div className="w-full border border-gray-200 rounded-xl bg-white shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 overflow-hidden">
-      {/* Car Image Placeholder */}
-      <div className="w-full h-40 bg-gray-100 flex items-center justify-center">
-        {/* Replace with actual car image if available */}
+      {/* Car Image */}
+      <div className="w-full h-60 sm:h-64 md:h-72 lg:h-80 bg-gray-100 overflow-hidden relative">
         <img
           src={
-            car?.image || 'https://via.placeholder.com/300x150?text=Car+Image'
+            car?.image || 'https://via.placeholder.com/400x225?text=Car+Image'
           }
           alt={name}
-          className="object-cover w-full h-full"
+          className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105"
         />
       </div>
 
@@ -36,7 +35,7 @@ const CarCard = ({ car }) => {
         </p>
 
         <div className="flex justify-between items-center mt-2 text-gray-700 font-semibold">
-          <span>Provider: {providerName}</span>
+          <span>Provider: {provider.name}</span>
           <span className="text-blue-600">${pricePerDay}/day</span>
         </div>
 

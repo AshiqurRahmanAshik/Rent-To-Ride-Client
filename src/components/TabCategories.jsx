@@ -46,7 +46,7 @@ const TabCategories = () => {
         <TabPanel>
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3">
             {cars
-              .filter((c) => c.category?.toLowerCase() === 'featured cars')
+              .filter((c) => c.type?.toLowerCase() === 'featured')
               .map((car) => (
                 <CarCard key={car._id} car={car} />
               ))}
@@ -57,7 +57,7 @@ const TabCategories = () => {
         <TabPanel>
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3">
             {cars
-              .filter((c) => c.category?.toLowerCase() === 'top rated cars')
+              .filter((c) => c.type?.toLowerCase() === 'top rated')
               .map((car) => (
                 <CarCard key={car._id} car={car} />
               ))}
