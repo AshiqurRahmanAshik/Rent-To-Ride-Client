@@ -29,17 +29,44 @@ const MyBookings = () => {
     fetchBookings();
   }, [user]);
 
-  const handleRemove = async (bookingId) => {
-    try {
-      await axios.delete(
-        `${import.meta.env.VITE_API_URL}/bookings/${bookingId}`
-      );
-      setBookings((prev) => prev.filter((b) => b._id !== bookingId));
-      toast.success('Booking cancelled successfully!');
-    } catch (error) {
-      console.error(error);
-      toast.error('Failed to cancel booking.');
-    }
+  const handleRemove = (bookingId) => {
+    // Custom toast confirmation component
+    const ToastConfirm = ({ closeToast }) => (
+      <div className="flex flex-col gap-2">
+        <p>Are you sure you want to cancel this booking?</p>
+        <div className="flex justify-end gap-2">
+          <button
+            onClick={async () => {
+              try {
+                await axios.delete(
+                  `${import.meta.env.VITE_API_URL}/bookings/${bookingId}`
+                );
+                setBookings((prev) => prev.filter((b) => b._id !== bookingId));
+                toast.success('Booking cancelled successfully!');
+              } catch (error) {
+                console.error(error);
+                toast.error('Failed to cancel booking.');
+              }
+              closeToast();
+            }}
+            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+          >
+            Yes
+          </button>
+          <button
+            onClick={closeToast}
+            className="bg-gray-300 hover:bg-gray-400 text-black px-3 py-1 rounded"
+          >
+            No
+          </button>
+        </div>
+      </div>
+    );
+
+    toast.info(<ToastConfirm />, {
+      autoClose: false,
+      closeOnClick: false,
+    });
   };
 
   if (loading) return <p className="text-center py-10">Loading bookings...</p>;
