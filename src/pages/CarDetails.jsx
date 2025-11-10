@@ -23,8 +23,13 @@ const CarDetails = () => {
 
   const [status, setStatus] = useState(initialStatus);
 
+  // Check if logged-in user is the provider
+  const isOwnCar = user?.email === providerEmail;
+
   const handleBooking = async () => {
     if (!user?.email) return toast.error('Please log in to book a car!');
+
+    if (isOwnCar) return toast.error('You cannot book your own car!');
 
     const booking = {
       carId: _id,
@@ -42,7 +47,10 @@ const CarDetails = () => {
       setStatus('Booked');
     } catch (error) {
       console.error(error);
-      toast.error('Failed to book car.');
+      const msg =
+        error?.response?.data?.message ||
+        'Failed to book car. Please try again.';
+      toast.error(msg);
     }
   };
 
@@ -79,20 +87,26 @@ const CarDetails = () => {
         <div className="mt-4 p-4 border rounded bg-gray-50">
           <h2 className="text-xl font-semibold mb-2">Provider Information</h2>
           <p>
-            <span className="font-semibold">Name:</span> {provider.name}
+            <span className="font-semibold">Name:</span> {providerName}
           </p>
           <p>
-            <span className="font-semibold">Email:</span> {provider.email}
+            <span className="font-semibold">Email:</span> {providerEmail}
           </p>
         </div>
       </div>
 
+      {/* Booking Button */}
       {status === 'Available' ? (
         <button
           onClick={handleBooking}
-          className="mt-6 cursor-pointer w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-500 transition"
+          disabled={isOwnCar}
+          className={`mt-6 w-full py-2 rounded transition ${
+            isOwnCar
+              ? 'bg-gray-400 cursor-not-allowed text-white'
+              : 'bg-blue-600 hover:bg-blue-500 text-white'
+          }`}
         >
-          Book Now
+          {isOwnCar ? 'Cannot Book Own Car' : 'Book Now'}
         </button>
       ) : (
         <button
