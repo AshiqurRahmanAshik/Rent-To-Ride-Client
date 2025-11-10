@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useLoaderData } from 'react-router';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../providers/AuthProvider';
 
 const CarDetails = () => {
   const car = useLoaderData();
+  const { user } = useContext(AuthContext);
   const {
     _id,
     name,
@@ -14,52 +16,29 @@ const CarDetails = () => {
     pricePerDay,
     location,
     status: initialStatus,
-    provider,
+    providerName,
+    providerEmail,
   } = car;
 
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [status, setStatus] = useState(initialStatus); // Local status state
+  const [status, setStatus] = useState(initialStatus);
 
-  // Email regex pattern
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    if (!emailPattern.test(e.target.value)) {
-      setEmailError('Enter a valid email');
-    } else {
-      setEmailError('');
-    }
-  };
-
-  const handleBooking = async (e) => {
-    e.preventDefault();
-
-    if (!email) {
-      return toast.error('Enter your email!');
-    }
-
-    if (!emailPattern.test(email)) {
-      return toast.error('Enter a valid email!');
-    }
+  const handleBooking = async () => {
+    if (!user?.email) return toast.error('Please log in to book a car!');
 
     const booking = {
       carId: _id,
       carName: name,
       category,
-      rentPrice: pricePerDay,
-      email,
+      rentPrice: Number(pricePerDay),
+      email: user.email,
       image,
       location,
-      provider,
     };
 
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/bookings`, booking);
       toast.success('Car booked successfully!');
-      setEmail('');
-      setStatus('Booked'); // Update status locally
+      setStatus('Booked');
     } catch (error) {
       console.error(error);
       toast.error('Failed to book car.');
@@ -68,18 +47,15 @@ const CarDetails = () => {
 
   return (
     <div className="max-w-4xl mx-auto py-10 px-4">
-      {/* Car Image */}
       <img
         src={image}
         alt={name}
         className="w-full h-72 object-cover rounded-lg mb-6 shadow"
       />
 
-      {/* Car Info */}
       <div className="space-y-3">
         <h1 className="text-3xl font-semibold">{name}</h1>
         <p className="text-gray-700">{description}</p>
-
         <p className="text-lg">
           <span className="font-semibold">Category:</span> {category}
         </p>
@@ -87,7 +63,8 @@ const CarDetails = () => {
           <span className="font-semibold">Location:</span> {location}
         </p>
         <p className="text-lg">
-          <span className="font-semibold">Rent Price:</span> ${pricePerDay}/day
+          <span className="font-semibold">Rent Price:</span> $
+          {Number(pricePerDay).toFixed(2)}/day
         </p>
         <p
           className={`text-lg font-semibold ${
@@ -101,43 +78,25 @@ const CarDetails = () => {
         <div className="mt-4 p-4 border rounded bg-gray-50">
           <h2 className="text-xl font-semibold mb-2">Provider Information</h2>
           <p>
-            <span className="font-semibold">Name:</span> {provider.name}
+            <span className="font-semibold">Name:</span> {providerName}
           </p>
           <p>
-            <span className="font-semibold">Email:</span> {provider.email}
+            <span className="font-semibold">Email:</span> {providerEmail}
           </p>
         </div>
       </div>
 
-      {/* Booking Form */}
-      {status === 'Available' && (
-        <form onSubmit={handleBooking} className="mt-6">
-          <input
-            type="email"
-            placeholder="Your Email"
-            value={email}
-            onChange={handleEmailChange}
-            className={`w-full border p-2 rounded mb-1 ${
-              emailError ? 'border-red-500' : 'border-gray-300'
-            }`}
-            required
-          />
-          {emailError && (
-            <p className="text-red-500 mb-2 text-sm">{emailError}</p>
-          )}
-          <button
-            type="submit"
-            className=" cursor-pointer w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-500 transition"
-          >
-            Book Now
-          </button>
-        </form>
-      )}
-
-      {status === 'Booked' && (
+      {status === 'Available' ? (
         <button
-          className="mt-6 text-red-500 font-semibold text-center border border-red-500 w-full py-2 rounded cursor-not-allowed"
+          onClick={handleBooking}
+          className="mt-6 cursor-pointer w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-500 transition"
+        >
+          Book Now
+        </button>
+      ) : (
+        <button
           disabled
+          className="mt-6 text-red-500 font-semibold border border-red-500 w-full py-2 rounded cursor-not-allowed"
         >
           Already Booked
         </button>

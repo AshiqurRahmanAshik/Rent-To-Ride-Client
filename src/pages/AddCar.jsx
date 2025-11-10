@@ -3,16 +3,19 @@ import { AuthContext } from '../providers/AuthProvider';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const AddCar = () => {
+const AddCar = ({ onCarAdded }) => {
   const { user } = useContext(AuthContext);
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    category: 'Sedan',
+    category: 'Select Category',
     pricePerDay: '',
     location: '',
     image: '',
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,31 +24,43 @@ const AddCar = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { name, description, category, pricePerDay, location, image } =
+      formData;
 
     if (
-      !formData.name ||
-      !formData.description ||
-      !formData.pricePerDay ||
-      !formData.location ||
-      !formData.image
+      !name ||
+      !description ||
+      !pricePerDay ||
+      !location ||
+      !image ||
+      category === 'Select Category'
     ) {
-      return toast.error('Please fill in all required fields!');
+      return toast.error(
+        'Please fill in all required fields and select a category!'
+      );
     }
 
     const newCar = {
       ...formData,
-      providerName: user.displayName,
-      providerEmail: user.email,
+      providerName: user?.displayName,
+      providerEmail: user?.email,
       status: 'Available',
     };
 
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/cars`, newCar);
+      setLoading(true);
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/cars`,
+        newCar
+      );
+
       toast.success('Car added successfully!');
+      if (onCarAdded) onCarAdded(data); // Use full car object from backend
+
       setFormData({
         name: '',
         description: '',
-        category: 'Sedan',
+        category: 'Select Category',
         pricePerDay: '',
         location: '',
         image: '',
@@ -53,6 +68,8 @@ const AddCar = () => {
     } catch (error) {
       console.error(error);
       toast.error('Failed to add car.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -85,7 +102,9 @@ const AddCar = () => {
           value={formData.category}
           onChange={handleChange}
           className="w-full border p-2 rounded"
+          required
         >
+          <option>Select Category</option>
           <option>Sedan</option>
           <option>SUV</option>
           <option>Hatchback</option>
@@ -97,9 +116,10 @@ const AddCar = () => {
           name="pricePerDay"
           value={formData.pricePerDay}
           onChange={handleChange}
-          placeholder="Price per day"
+          placeholder="Rent Price per Day"
           className="w-full border p-2 rounded"
           required
+          min="1"
         />
         <input
           type="text"
@@ -115,27 +135,35 @@ const AddCar = () => {
           name="image"
           value={formData.image}
           onChange={handleChange}
-          placeholder="Image URL"
+          placeholder="Hosted Image URL"
           className="w-full border p-2 rounded"
           required
         />
-        <input
-          type="text"
-          value={user.displayName}
-          readOnly
-          className="w-full border p-2 rounded bg-gray-100"
-        />
-        <input
-          type="email"
-          value={user.email}
-          readOnly
-          className="w-full border p-2 rounded bg-gray-100"
-        />
+
+        <div className="space-y-2 border p-4 rounded">
+          <h2 className="text-center font-bold text-xl">
+            Provider Information
+          </h2>
+          <input
+            type="text"
+            value={user.displayName}
+            readOnly
+            className="w-full border p-2 rounded bg-gray-100"
+          />
+          <input
+            type="email"
+            value={user.email}
+            readOnly
+            className="w-full border p-2 rounded bg-gray-100"
+          />
+        </div>
+
         <button
           type="submit"
-          className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-500"
+          className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-500 disabled:opacity-50"
+          disabled={loading}
         >
-          Add Car
+          {loading ? 'Adding...' : 'Add Car'}
         </button>
       </form>
     </div>

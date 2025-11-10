@@ -5,6 +5,7 @@ import { FaCar } from 'react-icons/fa';
 import { AuthContext } from '../providers/AuthProvider';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
+import AddCar from './AddCar';
 
 const BrowseCars = () => {
   const [cars, setCars] = useState([]);
@@ -35,9 +36,13 @@ const BrowseCars = () => {
     }
   };
 
+  // For AddCar to notify BrowseCars
+  const handleCarAdded = (newCar) => {
+    setCars((prev) => [...prev, newCar]);
+  };
+
   return (
     <div className="text-center">
-      {/* Heading */}
       <div className="text-center mt-12 mb-10 flex flex-col items-center">
         <h2 className="text-2xl md:text-4xl font-extrabold text-blue-600 flex items-center gap-3">
           <FaCar className="text-blue-600" />
