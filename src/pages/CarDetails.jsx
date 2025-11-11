@@ -16,7 +16,6 @@ const CarDetails = () => {
     pricePerDay,
     location,
     status: initialStatus,
-    providerName,
     providerEmail,
     provider,
   } = car;
@@ -87,10 +86,10 @@ const CarDetails = () => {
         <div className="mt-4 p-4 border rounded bg-gray-50">
           <h2 className="text-xl font-semibold mb-2">Provider Information</h2>
           <p>
-            <span className="font-semibold">Name:</span> {providerName}
+            <span className="font-semibold">Name:</span> {provider.name}
           </p>
           <p>
-            <span className="font-semibold">Email:</span> {providerEmail}
+            <span className="font-semibold">Email:</span> {provider.email}
           </p>
         </div>
       </div>

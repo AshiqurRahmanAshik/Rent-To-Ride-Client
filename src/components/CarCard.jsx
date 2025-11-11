@@ -6,8 +6,16 @@ import { AuthContext } from '../providers/AuthProvider';
 const CarCard = ({ car }) => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { category, model, name, pricePerDay, provider, image, _id } =
-    car || {};
+  const {
+    category,
+    description,
+    model,
+    name,
+    pricePerDay,
+    provider,
+    image,
+    _id,
+  } = car || {};
 
   // Handle View Details click
   const handleViewDetails = () => {
@@ -20,7 +28,7 @@ const CarCard = ({ car }) => {
   };
 
   return (
-    <div className="w-full border border-gray-200 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 overflow-hidden">
+    <div className="w-full md:min-h-120 lg:min-h-130 flex flex-col lg:justify-between border border-gray-200 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 overflow-hidden">
       {/* Car Image */}
       <div className="w-full h-60 sm:h-64 md:h-72 lg:h-80 bg-gray-100 overflow-hidden relative">
         <img
@@ -43,10 +51,7 @@ const CarCard = ({ car }) => {
 
         <h2 className="text-lg font-bold text-gray-800">{name}</h2>
 
-        <p className="text-sm text-gray-600 line-clamp-3">
-          Experience the perfect blend of style and performance. Smooth rides,
-          premium interiors, and reliable service.
-        </p>
+        <p className="text-sm text-gray-600 line-clamp-3">{description}</p>
 
         <div className="flex justify-between items-center mt-2 text-gray-700 font-semibold">
           <span>Provider: {provider?.name || 'N/A'}</span>
