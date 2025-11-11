@@ -1,27 +1,28 @@
+import { Link, useNavigate } from 'react-router';
 import { useContext } from 'react';
-import { useNavigate } from 'react-router';
-import { toast } from 'react-toastify';
-import { AuthContext } from '../providers/AuthProvider';
+import { AuthContext } from '../providers/AuthProvider'; // adjust path
 
 const CarCard = ({ car }) => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  if (!car) return null;
+
   const {
+    _id,
     category,
     description,
     model,
     name,
     pricePerDay,
-    provider,
+    providerName,
     image,
-    _id,
-  } = car || {};
+  } = car;
 
-  // Handle View Details click
   const handleViewDetails = () => {
     if (!user) {
-      toast.info('Please login to view car details!', { autoClose: 2000 });
-      navigate('/login');
+      // Redirect to login and save intended path
+      navigate('/login', { state: `/car/${_id}` });
     } else {
       navigate(`/car/${_id}`);
     }
@@ -41,25 +42,24 @@ const CarCard = ({ car }) => {
       {/* Card Content */}
       <div className="p-4 space-y-2">
         <div className="flex justify-between items-center">
-          <span className="text-xs font-semibold  uppercase">{model}</span>
+          <span className="text-xs font-semibold uppercase">{model}</span>
           <span className="px-3 py-1 text-[10px] text-blue-800 uppercase bg-blue-100 rounded-full font-medium">
             {category}
           </span>
         </div>
 
-        <h2 className="text-lg font-bold ">{name}</h2>
+        <h2 className="text-lg font-bold">{name}</h2>
+        <p className="text-sm line-clamp-3">{description}</p>
 
-        <p className="text-sm  line-clamp-3">{description}</p>
-
-        <div className="flex justify-between items-center mt-2  font-semibold">
-          <span>Provider: {provider?.name || 'N/A'}</span>
+        <div className="flex justify-between items-center my-2 font-semibold">
+          <span>Provider: {providerName || 'N/A'}</span>
           <span className="text-blue-600">${pricePerDay}/day</span>
         </div>
 
         {/* View Details Button */}
         <button
           onClick={handleViewDetails}
-          className="w-full mt-3 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition"
+          className="w-full mt-3 py-2 bg-blue-600 text-white rounded-lg font-medium text-center block hover:bg-blue-700 transition"
         >
           View Details
         </button>

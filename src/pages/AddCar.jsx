@@ -42,6 +42,7 @@ const AddCar = ({ onCarAdded }) => {
 
     const newCar = {
       ...formData,
+      description: description || 'No description provided.',
       providerName: user?.displayName,
       providerEmail: user?.email,
       status: 'Available',
@@ -55,7 +56,7 @@ const AddCar = ({ onCarAdded }) => {
       );
 
       toast.success('Car added successfully!');
-      if (onCarAdded) onCarAdded(data); // Use full car object from backend
+      if (onCarAdded) onCarAdded(data); // update car list
 
       setFormData({
         name: '',
@@ -75,10 +76,10 @@ const AddCar = ({ onCarAdded }) => {
 
   return (
     <div className="max-w-3xl mx-auto py-10 px-4">
-      <h1 className="text-2xl font-semibold  mb-6">Add New Car</h1>
+      <h1 className="text-2xl font-semibold mb-6">Add New Car</h1>
       <form
         onSubmit={handleSubmit}
-        className=" p-6 rounded-md shadow-md space-y-4"
+        className="p-6 rounded-md shadow-md space-y-4"
       >
         <input
           type="text"
@@ -140,7 +141,8 @@ const AddCar = ({ onCarAdded }) => {
           required
         />
 
-        <div className="space-y-2 border p-4 rounded">
+        {/* Provider Info */}
+        <div className="space-y-2 border p-4 rounded bg-gray-50">
           <h2 className="text-center font-bold text-xl">
             Provider Information
           </h2>

@@ -7,7 +7,7 @@ import CarDetails from '../pages/CarDetails';
 import MyBookings from '../pages/MyBookings';
 import MyListings from '../pages/MyListings';
 import AddCar from '../pages/AddCar';
-import PrivateRoute from '../routes/PrivateRoute'; // add this
+import PrivateRoute from '../routes/PrivateRoute';
 import ErrorPage from '../pages/ErrorPage';
 import BrowseCars from '../pages/BrowseCars';
 import SuccessStories from '../components/SuccessStories';
@@ -35,10 +35,14 @@ export const router = createBrowserRouter([
             const res = await fetch(
               `${import.meta.env.VITE_API_URL}/car/${params.id}`
             );
-            if (!res.ok) throw new Error('Failed to fetch car');
+            if (!res.ok) {
+              // Return null instead of throwing
+              return null;
+            }
             return res.json();
           } catch (err) {
             console.error(err);
+            // IMPORTANT: Return null so the component can handle it
             return null;
           }
         },

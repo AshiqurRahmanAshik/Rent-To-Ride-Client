@@ -1,11 +1,14 @@
+// TabCategories.jsx
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import CarCard from './CarCard';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 const TabCategories = () => {
   const [cars, setCars] = useState([]);
+  const navigate = useNavigate(); // ✅ added
 
   useEffect(() => {
     const getData = async () => {
@@ -13,7 +16,7 @@ const TabCategories = () => {
         const { data } = await axios.get(
           `${import.meta.env.VITE_API_URL}/cars`
         );
-        console.log('Fetched cars:', data); // Debugging
+        console.log('Fetched cars:', data);
         setCars(data);
       } catch (err) {
         console.error('Error fetching cars:', err);
@@ -21,6 +24,11 @@ const TabCategories = () => {
     };
     getData();
   }, []);
+
+  // ✅ Fix for View Details
+  const handleViewDetails = (id) => {
+    navigate(`/car/${id}`);
+  };
 
   return (
     <Tabs>
@@ -48,7 +56,11 @@ const TabCategories = () => {
             {cars
               .filter((c) => c.type?.toLowerCase() === 'featured')
               .map((car) => (
-                <CarCard key={car._id} car={car} />
+                <CarCard
+                  key={car._id}
+                  car={car}
+                  onViewDetails={() => handleViewDetails(car._id)} // ✅ fixed
+                />
               ))}
           </div>
         </TabPanel>
@@ -59,7 +71,11 @@ const TabCategories = () => {
             {cars
               .filter((c) => c.type?.toLowerCase() === 'top rated')
               .map((car) => (
-                <CarCard key={car._id} car={car} />
+                <CarCard
+                  key={car._id}
+                  car={car}
+                  onViewDetails={() => handleViewDetails(car._id)} // ✅ fixed
+                />
               ))}
           </div>
         </TabPanel>
@@ -68,7 +84,11 @@ const TabCategories = () => {
         <TabPanel>
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3">
             {cars.map((car) => (
-              <CarCard key={car._id} car={car} />
+              <CarCard
+                key={car._id}
+                car={car}
+                onViewDetails={() => handleViewDetails(car._id)} // ✅ fixed
+              />
             ))}
           </div>
         </TabPanel>
