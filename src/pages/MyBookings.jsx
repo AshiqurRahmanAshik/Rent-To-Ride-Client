@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../providers/AuthProvider';
 import { toast } from 'react-toastify';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const MyBookings = () => {
   const { user } = useContext(AuthContext);
@@ -38,7 +39,12 @@ const MyBookings = () => {
     }
   };
 
-  if (loading) return <p className="text-center py-10">Loading bookings...</p>;
+  if (loading)
+    return (
+      <p className="text-center py-10">
+        <LoadingSpinner />
+      </p>
+    );
   if (bookings.length === 0)
     return <p className="text-center py-10">No bookings found.</p>;
 

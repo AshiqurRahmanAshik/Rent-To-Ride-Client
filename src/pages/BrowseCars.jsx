@@ -6,9 +6,11 @@ import { AuthContext } from '../providers/AuthProvider';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import AddCar from './AddCar';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const BrowseCars = () => {
   const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(true); // 🔹 Loading state
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -22,6 +24,8 @@ const BrowseCars = () => {
       } catch (err) {
         console.error('Error fetching cars:', err);
         toast.error('Failed to fetch cars.');
+      } finally {
+        setLoading(false); // 🔹 Stop loading in all cases
       }
     };
     getData();
@@ -40,6 +44,11 @@ const BrowseCars = () => {
   const handleCarAdded = (newCar) => {
     setCars((prev) => [...prev, newCar]);
   };
+
+  // 🔹 Spinner Loader
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="text-center">

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { AuthContext } from '../providers/AuthProvider';
 import UpdateCarModal from './UpdateCarModal';
 import { toast } from 'react-toastify';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const MyListings = () => {
   const { user } = useContext(AuthContext);
@@ -81,7 +82,9 @@ const MyListings = () => {
       <h1 className="text-2xl font-semibold mb-6">My Listings</h1>
 
       {loading ? (
-        <p className="text-center text-gray-500">Loading your listings...</p>
+        <p className="text-center text-gray-500">
+          <LoadingSpinner />
+        </p>
       ) : cars.length === 0 ? (
         <p className="text-center text-gray-500">No cars found.</p>
       ) : (
