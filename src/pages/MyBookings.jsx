@@ -53,9 +53,9 @@ const MyBookings = () => {
       <h1 className="text-2xl font-semibold mb-6">My Bookings</h1>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border rounded-lg shadow-md">
+        <table className="min-w-full  border rounded-lg shadow-md">
           <thead>
-            <tr className="bg-gray-100 text-left">
+            <tr className=" text-left">
               <th className="px-4 py-2 border-b">Image</th>
               <th className="px-4 py-2 border-b">Car Name</th>
               <th className="px-4 py-2 border-b">Category</th>

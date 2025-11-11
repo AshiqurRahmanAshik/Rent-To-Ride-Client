@@ -41,19 +41,17 @@ const CarCard = ({ car }) => {
       {/* Card Content */}
       <div className="p-4 space-y-2">
         <div className="flex justify-between items-center">
-          <span className="text-xs font-semibold text-gray-500 uppercase">
-            {model}
-          </span>
+          <span className="text-xs font-semibold  uppercase">{model}</span>
           <span className="px-3 py-1 text-[10px] text-blue-800 uppercase bg-blue-100 rounded-full font-medium">
             {category}
           </span>
         </div>
 
-        <h2 className="text-lg font-bold text-gray-800">{name}</h2>
+        <h2 className="text-lg font-bold ">{name}</h2>
 
-        <p className="text-sm text-gray-600 line-clamp-3">{description}</p>
+        <p className="text-sm  line-clamp-3">{description}</p>
 
-        <div className="flex justify-between items-center mt-2 text-gray-700 font-semibold">
+        <div className="flex justify-between items-center mt-2  font-semibold">
           <span>Provider: {provider?.name || 'N/A'}</span>
           <span className="text-blue-600">${pricePerDay}/day</span>
         </div>

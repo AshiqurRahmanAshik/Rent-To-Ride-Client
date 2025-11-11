@@ -75,10 +75,10 @@ const AddCar = ({ onCarAdded }) => {
 
   return (
     <div className="max-w-3xl mx-auto py-10 px-4">
-      <h1 className="text-2xl font-semibold text-gray-800 mb-6">Add New Car</h1>
+      <h1 className="text-2xl font-semibold  mb-6">Add New Car</h1>
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-md shadow-md space-y-4"
+        className=" p-6 rounded-md shadow-md space-y-4"
       >
         <input
           type="text"

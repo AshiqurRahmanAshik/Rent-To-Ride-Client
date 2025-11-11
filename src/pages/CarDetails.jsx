@@ -63,7 +63,7 @@ const CarDetails = () => {
 
       <div className="space-y-3">
         <h1 className="text-3xl font-semibold">{name}</h1>
-        <p className="text-gray-700">{description}</p>
+        <p className="">{description}</p>
         <p className="text-lg">
           <span className="font-semibold">Category:</span> {category}
         </p>

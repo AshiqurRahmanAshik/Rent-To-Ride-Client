@@ -22,7 +22,7 @@ const Footer = () => {
         <div className="flex flex-col items-center text-center">
           <div className="flex items-center gap-2">
             <img src={logo} alt="Rent To Ride" className="h-14 w-auto" />
-            <span className="text-xl font-bold text-gray-700 dark:text-white">
+            <span className="text-xl font-bold  dark:text-white">
               Rent To Ride
             </span>
           </div>
@@ -33,7 +33,7 @@ const Footer = () => {
               <a
                 key={index}
                 href="#"
-                className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300 font-medium"
+                className=" dark: hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300 font-medium"
               >
                 {link}
               </a>
@@ -45,7 +45,7 @@ const Footer = () => {
 
         {/* Bottom */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-gray-500 dark:text-gray-400 text-sm">
+          <p className=" dark: text-sm">
             © 2025 Rent To Ride. All rights reserved.
           </p>
 
@@ -54,7 +54,7 @@ const Footer = () => {
               <a
                 key={index}
                 href={social.href}
-                className="text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300 text-lg"
+                className=" dark: hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300 text-lg"
               >
                 {social.icon}
               </a>

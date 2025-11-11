@@ -53,12 +53,12 @@ const UpdateCarModal = ({ car, onClose, onUpdate }) => {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-xl shadow-xl w-full max-w-lg p-6 relative"
+        className=" rounded-xl shadow-xl w-full max-w-lg p-6 relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 font-bold text-lg"
+          className="absolute top-4 right-4  hover:text-gray-900 font-bold text-lg"
         >
           ×
         </button>

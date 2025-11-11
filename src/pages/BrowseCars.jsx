@@ -69,7 +69,7 @@ const BrowseCars = () => {
           <FaCar className="text-blue-600" />
           Explore Our Premium Cars
         </h2>
-        <p className="mt-4 text-gray-600 md:text-xl max-w-xl">
+        <p className="mt-4  md:text-xl max-w-xl">
           Explore our wide range of premium cars and find your perfect ride.
         </p>
       </div>
@@ -87,7 +87,7 @@ const BrowseCars = () => {
 
       {/* 🔹 Show count / message */}
       {search && (
-        <p className="text-gray-600 font-medium mb-6">
+        <p className=" font-medium mb-6">
           {filteredCars.length > 0 ? (
             <>
               {filteredCars.length} car{filteredCars.length > 1 ? 's' : ''}{' '}

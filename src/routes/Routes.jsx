@@ -11,6 +11,7 @@ import PrivateRoute from '../routes/PrivateRoute'; // add this
 import ErrorPage from '../pages/ErrorPage';
 import BrowseCars from '../pages/BrowseCars';
 import SuccessStories from '../components/SuccessStories';
+import UpdateProfile from '../pages/UpdateProfile';
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ export const router = createBrowserRouter([
       { path: '/register', element: <Register /> },
       { path: '/browse-cars', element: <BrowseCars /> },
       { path: '/success-stories', element: <SuccessStories /> },
+      { path: '/update-profile', element: <UpdateProfile /> },
 
       // Car Details with loader
       {

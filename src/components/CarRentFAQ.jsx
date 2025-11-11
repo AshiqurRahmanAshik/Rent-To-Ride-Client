@@ -107,12 +107,12 @@ export default function CarRentFAQ() {
   }
 
   return (
-    <section className="max-w-4xl mx-auto p-6 bg-white rounded-2xl shadow-md">
+    <section className="max-w-4xl mx-auto my-10 p-6 rounded-2xl shadow-md">
       <header className="mb-6">
         <h2 className="text-2xl md:text-3xl font-semibold">
           Frequently Asked Questions
         </h2>
-        <p className="mt-2 text-sm text-gray-600">
+        <p className="mt-2 text-sm ">
           Answers to common questions about booking, pickup, payment and
           policies.
         </p>
@@ -141,7 +141,7 @@ export default function CarRentFAQ() {
             id="faq-category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300"
+            className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
           >
             {categories.map((c) => (
               <option key={c} value={c}>
@@ -154,7 +154,7 @@ export default function CarRentFAQ() {
 
       <div className="space-y-3">
         {filtered.length === 0 && (
-          <div className="p-4 bg-gray-50 rounded-lg text-gray-600">
+          <div className="p-4 bg-gray-50 rounded-lg ">
             No matching FAQs. Try different keywords or select another category.
           </div>
         )}
@@ -171,13 +171,11 @@ export default function CarRentFAQ() {
               }}
               aria-expanded={openId === item.id}
               aria-controls={`faq-panel-${item.id}`}
-              className="w-full text-left px-4 py-3 flex items-center justify-between gap-4 bg-white hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300"
+              className="w-full text-left px-4 py-3 flex items-center justify-between gap-4  focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300"
             >
               <div>
                 <h3 className="text-base font-medium">{item.question}</h3>
-                <p className="text-sm text-gray-500 mt-1 hidden md:block">
-                  {item.category}
-                </p>
+                <p className="text-sm  mt-1 hidden md:block">{item.category}</p>
               </div>
 
               <div className="flex items-center">
@@ -207,7 +205,7 @@ export default function CarRentFAQ() {
               aria-labelledby={`faq-button-${item.id}`}
               className={`${
                 openId === item.id ? 'max-h-96 p-4' : 'max-h-0 p-0'
-              } overflow-hidden transition-all duration-300 bg-gray-50 text-gray-700`}
+              } overflow-hidden transition-all duration-300 border border-gray-300  `}
             >
               <p className="text-sm leading-relaxed">{item.answer}</p>
             </div>
@@ -215,7 +213,7 @@ export default function CarRentFAQ() {
         ))}
       </div>
 
-      <footer className="mt-6 text-sm text-gray-600">
+      <footer className="mt-6 text-sm ">
         <p>
           Can't find what you're looking for? Mail us at{' '}
           <strong>renttodrive@gmail.com</strong> for immediate assistance.

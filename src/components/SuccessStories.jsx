@@ -33,12 +33,12 @@ const successStories = [
 
 export default function SuccessStories() {
   return (
-    <div className="bg-gray-50 min-h-screen py-16 px-4">
+    <div className="min-h-screen py-16 px-4">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 text-center">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-center">
           Customer Success Stories
         </h1>
-        <p className="text-gray-600 mt-4 text-center max-w-2xl mx-auto">
+        <p className=" mt-4 text-center max-w-2xl mx-auto">
           See how our clients enjoy their trips and get the best experience with
           our cars.
         </p>
@@ -48,16 +48,14 @@ export default function SuccessStories() {
           {successStories.map((story, index) => (
             <div
               key={index}
-              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300"
+              className=" p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300"
             >
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold">
                 {story.customer}
               </h2>
-              <p className="text-gray-500 text-sm mt-1">{story.location}</p>
-              <p className="mt-3 text-gray-700">{story.story}</p>
-              <p className="mt-3 text-gray-800 font-medium">
-                Car Rented: {story.car}
-              </p>
+              <p className=" text-sm mt-1">{story.location}</p>
+              <p className="mt-3 ">{story.story}</p>
+              <p className="mt-3  font-medium">Car Rented: {story.car}</p>
             </div>
           ))}
         </div>

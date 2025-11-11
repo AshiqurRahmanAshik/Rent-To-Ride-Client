@@ -82,15 +82,15 @@ const MyListings = () => {
       <h1 className="text-2xl font-semibold mb-6">My Listings</h1>
 
       {loading ? (
-        <p className="text-center text-gray-500">
+        <p className="text-center ">
           <LoadingSpinner />
         </p>
       ) : cars.length === 0 ? (
-        <p className="text-center text-gray-500">No cars found.</p>
+        <p className="text-center ">No cars found.</p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200 shadow-sm rounded">
-            <thead className="bg-gray-100">
+          <table className="min-w-full  border border-gray-200 shadow-sm rounded">
+            <thead className="">
               <tr>
                 <th className="py-2 px-4 border-b">Car Name</th>
                 <th className="py-2 px-4 border-b">Category</th>

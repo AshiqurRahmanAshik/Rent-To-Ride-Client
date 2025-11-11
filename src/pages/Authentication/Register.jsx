@@ -21,6 +21,25 @@ const Registration = () => {
     const photo = form.photo.value;
     const pass = form.password.value;
 
+    // Password validation
+    const uppercasePattern = /[A-Z]/;
+    const lowercasePattern = /[a-z]/;
+
+    if (!uppercasePattern.test(pass)) {
+      toast.error('Password must contain at least one uppercase letter');
+      return;
+    }
+
+    if (!lowercasePattern.test(pass)) {
+      toast.error('Password must contain at least one lowercase letter');
+      return;
+    }
+
+    if (pass.length < 6) {
+      toast.error('Password must be at least 6 characters long');
+      return;
+    }
+
     try {
       const result = await createUser(email, pass);
       await updateUserProfile(name, photo);
@@ -77,19 +96,19 @@ const Registration = () => {
 
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-306px)] my-12">
-      <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg lg:max-w-4xl">
+      <div className="flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg lg:max-w-4xl">
         <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
           <div className="flex justify-center mx-auto">
             <img className="w-auto h-7 sm:h-8" src={logo} alt="Logo" />
           </div>
 
-          <p className="mt-3 text-xl text-center text-gray-600">
+          <p className="mt-3 text-xl text-center ">
             Get Your Free Account Now.
           </p>
 
           <div
             onClick={handleGoogleSignIn}
-            className="flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg hover:bg-gray-50"
+            className="flex cursor-pointer items-center justify-center mt-4 transition-colors duration-300 transform border rounded-lg hover:bg-gray-50"
           >
             <div className="px-4 py-2">
               <FcGoogle />
@@ -101,7 +120,7 @@ const Registration = () => {
 
           <div className="flex items-center justify-between mt-4">
             <span className="w-1/5 border-b lg:w-1/4"></span>
-            <div className="text-xs text-center text-gray-500 uppercase hover:underline">
+            <div className="text-xs text-center uppercase hover:underline">
               or Register with Email
             </div>
             <span className="w-1/5 border-b lg:w-1/4"></span>
@@ -109,24 +128,21 @@ const Registration = () => {
 
           <form onSubmit={handleSignUp}>
             <div className="mt-4">
-              <label
-                className="block mb-2 text-sm font-medium text-gray-600"
-                htmlFor="name"
-              >
+              <label className="block mb-2 text-sm font-medium " htmlFor="name">
                 Username
               </label>
               <input
                 id="name"
                 name="name"
                 autoFocus
-                className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
+                className="block w-full px-4 py-2 border rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
                 type="text"
               />
             </div>
 
             <div className="mt-4">
               <label
-                className="block mb-2 text-sm font-medium text-gray-600"
+                className="block mb-2 text-sm font-medium "
                 htmlFor="photo"
               >
                 Photo URL
@@ -134,14 +150,14 @@ const Registration = () => {
               <input
                 id="photo"
                 name="photo"
-                className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
+                className="block w-full px-4 py-2 border rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
                 type="text"
               />
             </div>
 
             <div className="mt-4">
               <label
-                className="block mb-2 text-sm font-medium text-gray-600"
+                className="block mb-2 text-sm font-medium "
                 htmlFor="email"
               >
                 Email Address
@@ -150,14 +166,14 @@ const Registration = () => {
                 id="email"
                 name="email"
                 autoComplete="email"
-                className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
+                className="block w-full px-4 py-2 border rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
                 type="email"
               />
             </div>
 
             <div className="mt-4 relative">
               <label
-                className="block mb-2 text-sm font-medium text-gray-600"
+                className="block mb-2 text-sm font-medium "
                 htmlFor="password"
               >
                 Password
@@ -165,12 +181,12 @@ const Registration = () => {
               <input
                 id="password"
                 name="password"
-                className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
+                className="block w-full px-4 py-2 border rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
                 type={showPass ? 'text' : 'password'}
               />
               <span
                 onClick={() => setShowPass(!showPass)}
-                className="absolute top-9 right-3 cursor-pointer text-gray-500 text-xl"
+                className="absolute top-9 right-3 cursor-pointer text-xl"
               >
                 {showPass ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
               </span>
@@ -188,10 +204,7 @@ const Registration = () => {
 
           <div className="flex items-center justify-between mt-4">
             <span className="w-1/5 border-b md:w-1/4"></span>
-            <Link
-              to="/login"
-              className="text-xs text-gray-500 uppercase hover:underline"
-            >
+            <Link to="/login" className="text-xs uppercase hover:underline">
               or sign in
             </Link>
             <span className="w-1/5 border-b md:w-1/4"></span>

@@ -4,26 +4,24 @@ import { FaStar } from 'react-icons/fa';
 
 const TopRatedCard = ({ car }) => {
   return (
-    <div className="bg-white shadow-lg rounded-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+    <div className=" shadow-lg rounded-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300">
       <img
         src={car.image}
         alt={car.name}
         className="w-10 h-48 object-contain"
       />
       <div className="p-5">
-        <h3 className="text-xl font-semibold text-gray-800">{car.name}</h3>
-        <p className="text-gray-500 mt-1">{car.type}</p>
+        <h3 className="text-xl font-semibold ">{car.name}</h3>
+        <p className=" mt-1">{car.type}</p>
         <div className="flex items-center mt-2">
           {[...Array(5)].map((_, i) => (
             <FaStar
               key={i}
-              className={`h-5 w-5 ${
-                i < car.rating ? 'text-yellow-400' : 'text-gray-300'
-              }`}
+              className={`h-5 w-5 ${i < car.rating ? 'text-yellow-400' : ''}`}
             />
           ))}
         </div>
-        <p className="text-gray-700 mt-2 font-medium">${car.price}/day</p>
+        <p className=" mt-2 font-medium">${car.price}/day</p>
         <Link
           to={`/cars/${car._id}`}
           className="mt-4 inline-block bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition-colors"

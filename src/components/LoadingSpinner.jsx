@@ -22,9 +22,7 @@ const LoadingSpinner = () => {
       </div>
 
       {/* Loading Text */}
-      <p className="mt-6 text-gray-600 font-medium animate-pulse text-lg">
-        Loading...
-      </p>
+      <p className="mt-6  font-medium animate-pulse text-lg">Loading...</p>
     </div>
   );
 };

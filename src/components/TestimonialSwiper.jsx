@@ -93,13 +93,13 @@ export default function TrustedTestimonials() {
 
         {/* Text Block */}
         <div className="mt-16 sm:mt-20 text-center max-w-2xl mx-auto px-4">
-          <span className="text-sm text-gray-400 uppercase tracking-widest">
+          <span className="text-sm  uppercase tracking-widest">
             Testimonials
           </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mt-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mt-3">
             Trusted by industry leaders worldwide
           </h2>
-          <p className="text-gray-600 mt-4 text-base sm:text-lg md:text-lg">
+          <p className=" mt-4 text-base sm:text-lg md:text-lg">
             Professionals choose our solutions to streamline their customer
             journeys and grow their businesses.
           </p>

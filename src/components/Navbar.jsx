@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import logo from '../assets/carLogo.png';
 import { AuthContext } from '../providers/AuthProvider';
 
@@ -7,9 +7,11 @@ const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const navigate = useNavigate();
 
+  // ✅ Apply theme globally
   useEffect(() => {
-    const html = document.querySelector('html');
+    const html = document.documentElement;
     html.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
   }, [theme]);
@@ -18,17 +20,20 @@ const Navbar = () => {
     setTheme(checked ? 'dark' : 'light');
   };
 
-  // ✅ Theme-based colors
+  const handleProfileUpdate = () => {
+    navigate('/update-profile');
+    setIsMobileMenuOpen(false);
+  };
+
   const activeClass =
     theme === 'dark'
       ? 'text-blue-400 font-semibold'
       : 'text-blue-600 font-semibold';
-
   const normalClass = theme === 'dark' ? 'text-gray-200' : 'text-gray-700';
 
   return (
     <div
-      className={`navbar shadow-sm container px-4 mx-auto relative transition-colors duration-300 ${
+      className={`navbar shadow-sm container px-4 mx-auto relative transition-all duration-300 ${
         theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-base-100 text-black'
       }`}
     >
@@ -123,25 +128,23 @@ const Navbar = () => {
             </>
           )}
 
-          {/* ✅ Theme toggle */}
-          <label className="flex items-center cursor-pointer ml-3">
-            <input
-              onChange={(e) => handleTheme(e.target.checked)}
-              type="checkbox"
-              checked={theme === 'dark'}
-              className="toggle toggle-sm"
-            />
-            <span
-              className={`ml-2 text-sm ${
-                theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
-              }`}
-            >
-              {theme === 'dark' ? 'Dark' : 'Light'}
-            </span>
-          </label>
+          {/* ✅ Theme Toggle (Desktop) */}
+          <div className="flex items-center ml-4">
+            <label className="flex items-center cursor-pointer gap-2">
+              <input
+                type="checkbox"
+                onChange={(e) => handleTheme(e.target.checked)}
+                checked={theme === 'dark'}
+                className="toggle toggle-sm"
+              />
+              <span className="text-sm">
+                {theme === 'dark' ? 'Dark' : 'Light'}
+              </span>
+            </label>
+          </div>
         </ul>
 
-        {/* ✅ User Profile */}
+        {/* ✅ Profile Dropdown */}
         {user && (
           <div className="dropdown dropdown-end ml-4 z-50">
             <div tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -153,7 +156,6 @@ const Navbar = () => {
                 />
               </div>
             </div>
-
             <ul
               tabIndex={0}
               className={`menu menu-sm dropdown-content mt-3 p-2 shadow rounded-box w-52 ${
@@ -168,10 +170,20 @@ const Navbar = () => {
               <li>
                 <span className="text-sm opacity-70">{user.email}</span>
               </li>
-              <li className="mt-2">
+              <li>
+                <button
+                  onClick={handleProfileUpdate}
+                  className={`w-full text-left py-1 rounded ${
+                    theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-gray-200'
+                  }`}
+                >
+                  Update Profile
+                </button>
+              </li>
+              <li className="mt-1">
                 <button
                   onClick={logOut}
-                  className={`w-full text-center py-1 rounded ${
+                  className={`w-full text-left py-1 rounded ${
                     theme === 'dark'
                       ? 'bg-gray-700 hover:bg-gray-600'
                       : 'bg-gray-200 hover:bg-gray-300'
@@ -185,7 +197,7 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* ✅ Mobile menu toggle */}
+      {/* ✅ Mobile Menu */}
       <div className="md:hidden flex-none">
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -213,7 +225,7 @@ const Navbar = () => {
 
         {isMobileMenuOpen && (
           <div
-            className={`absolute top-full left-0 w-full shadow-md z-40 md:hidden transition-colors duration-300 ${
+            className={`absolute top-full left-0 w-full shadow-md z-40 transition-all duration-300 ${
               theme === 'dark'
                 ? 'bg-gray-900 text-white'
                 : 'bg-base-100 text-black'
@@ -242,6 +254,55 @@ const Navbar = () => {
                   Browse Cars
                 </NavLink>
               </li>
+
+              {/* ✅ Theme Toggle (Mobile) */}
+              <li>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">
+                    {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+                  </span>
+                  <input
+                    type="checkbox"
+                    onChange={(e) => handleTheme(e.target.checked)}
+                    checked={theme === 'dark'}
+                    className="toggle toggle-sm"
+                  />
+                </div>
+              </li>
+
+              {/* ✅ Profile Actions (Mobile) */}
+              {user && (
+                <>
+                  <li>
+                    <button
+                      onClick={handleProfileUpdate}
+                      className={`w-full text-left py-1 rounded ${
+                        theme === 'dark'
+                          ? 'hover:bg-gray-700'
+                          : 'hover:bg-gray-200'
+                      }`}
+                    >
+                      Update Profile
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        logOut();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`w-full text-left py-1 rounded ${
+                        theme === 'dark'
+                          ? 'bg-gray-700 hover:bg-gray-600'
+                          : 'bg-gray-200 hover:bg-gray-300'
+                      }`}
+                    >
+                      Log Out
+                    </button>
+                  </li>
+                </>
+              )}
+
               {!user && (
                 <>
                   <li>
