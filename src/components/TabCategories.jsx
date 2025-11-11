@@ -3,12 +3,13 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import CarCard from './CarCard';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
 const TabCategories = () => {
   const [cars, setCars] = useState([]);
-  const navigate = useNavigate(); // ✅ added
+  const [search, setSearch] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
@@ -25,41 +26,73 @@ const TabCategories = () => {
     getData();
   }, []);
 
-  // ✅ Fix for View Details
   const handleViewDetails = (id) => {
     navigate(`/car/${id}`);
   };
 
+  // ✅ Filtered cars based on search input
+  const filteredCars = useMemo(() => {
+    return cars.filter(
+      (car) =>
+        car.name?.toLowerCase().includes(search.toLowerCase()) ||
+        car.model?.toLowerCase().includes(search.toLowerCase()) ||
+        car.category?.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [cars, search]);
+
   return (
     <Tabs>
       <div className="container px-6 py-10 mx-auto">
-        <h1 className="text-2xl font-semibold text-center  capitalize lg:text-3xl">
+        <h1 className="text-2xl font-semibold text-center capitalize lg:text-3xl">
           Browse Cars By Categories
         </h1>
 
         <p className="max-w-2xl mx-auto my-6 text-center">
-          Explore different types of rental cars available for your trip. Click
-          on the tabs below to browse cars by categories.
+          Explore different types of rental cars available for your trip. Use
+          the search bar or click on the tabs below.
         </p>
+
+        {/* Search Input */}
+        <div className="flex justify-center mb-6">
+          <input
+            type="text"
+            placeholder="Search cars by name, model, or category..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full max-w-md px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
         <div className="flex items-center justify-center">
           <TabList>
-            <Tab>Featured Cars</Tab>
-            <Tab>Top Rated Cars</Tab>
             <Tab>All Cars</Tab>
+            <Tab>Top Rated Cars</Tab>
+            <Tab>Featured Cars</Tab>
           </TabList>
         </div>
 
+        {/* All Cars */}
+        <TabPanel>
+          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3">
+            {filteredCars.map((car) => (
+              <CarCard
+                key={car._id}
+                car={car}
+                onViewDetails={() => handleViewDetails(car._id)}
+              />
+            ))}
+          </div>
+        </TabPanel>
         {/* Featured Cars */}
         <TabPanel>
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3">
-            {cars
+            {filteredCars
               .filter((c) => c.type?.toLowerCase() === 'featured')
               .map((car) => (
                 <CarCard
                   key={car._id}
                   car={car}
-                  onViewDetails={() => handleViewDetails(car._id)} // ✅ fixed
+                  onViewDetails={() => handleViewDetails(car._id)}
                 />
               ))}
           </div>
@@ -68,28 +101,15 @@ const TabCategories = () => {
         {/* Top Rated Cars */}
         <TabPanel>
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3">
-            {cars
+            {filteredCars
               .filter((c) => c.type?.toLowerCase() === 'top rated')
               .map((car) => (
                 <CarCard
                   key={car._id}
                   car={car}
-                  onViewDetails={() => handleViewDetails(car._id)} // ✅ fixed
+                  onViewDetails={() => handleViewDetails(car._id)}
                 />
               ))}
-          </div>
-        </TabPanel>
-
-        {/* All Cars */}
-        <TabPanel>
-          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3">
-            {cars.map((car) => (
-              <CarCard
-                key={car._id}
-                car={car}
-                onViewDetails={() => handleViewDetails(car._id)} // ✅ fixed
-              />
-            ))}
           </div>
         </TabPanel>
       </div>
