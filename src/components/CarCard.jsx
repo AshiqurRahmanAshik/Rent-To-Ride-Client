@@ -1,6 +1,6 @@
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useContext } from 'react';
-import { AuthContext } from '../providers/AuthProvider'; // adjust path
+import { AuthContext } from '../providers/AuthProvider';
 
 const CarCard = ({ car }) => {
   const { user } = useContext(AuthContext);
@@ -17,6 +17,7 @@ const CarCard = ({ car }) => {
     pricePerDay,
     providerName,
     image,
+    status, // assume this field exists
   } = car;
 
   const handleViewDetails = () => {
@@ -29,7 +30,7 @@ const CarCard = ({ car }) => {
   };
 
   return (
-    <div className="w-full md:min-h-120 lg:min-h-130 flex flex-col lg:justify-between border border-gray-200 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 overflow-hidden">
+    <div className="w-full md:min-h-120 lg:min-h-130 flex flex-col lg:justify-between border border-gray-200 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 overflow-hidden relative">
       {/* Car Image */}
       <div className="w-full h-60 sm:h-64 md:h-72 lg:h-80 bg-gray-100 overflow-hidden relative">
         <img
@@ -37,6 +38,13 @@ const CarCard = ({ car }) => {
           alt={name}
           className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105"
         />
+
+        {/* Booked Badge */}
+        {status === 'Booked' && (
+          <span className="absolute top-2 right-2 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+            Booked
+          </span>
+        )}
       </div>
 
       {/* Card Content */}
@@ -59,9 +67,14 @@ const CarCard = ({ car }) => {
         {/* View Details Button */}
         <button
           onClick={handleViewDetails}
-          className="w-full mt-3 py-2 bg-blue-600 text-white rounded-lg font-medium text-center block hover:bg-blue-700 transition"
+          className={`w-full mt-3 py-2 rounded-lg font-medium text-center block transition ${
+            status === 'Booked'
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-blue-600 hover:bg-blue-700 text-white'
+          }`}
+          disabled={status === 'Booked'}
         >
-          View Details
+          {status === 'Booked' ? 'Booked' : 'View Details'}
         </button>
       </div>
     </div>
