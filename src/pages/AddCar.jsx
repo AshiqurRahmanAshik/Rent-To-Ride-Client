@@ -8,6 +8,7 @@ const AddCar = ({ onCarAdded }) => {
 
   const [formData, setFormData] = useState({
     name: '',
+    model: '',
     description: '',
     category: 'Select Category',
     pricePerDay: '',
@@ -24,11 +25,12 @@ const AddCar = ({ onCarAdded }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, description, category, pricePerDay, location, image } =
+    const { name, model, description, category, pricePerDay, location, image } =
       formData;
 
     if (
       !name ||
+      !model ||
       !description ||
       !pricePerDay ||
       !location ||
@@ -42,7 +44,6 @@ const AddCar = ({ onCarAdded }) => {
 
     const newCar = {
       ...formData,
-      description: description || 'No description provided.',
       providerName: user?.displayName,
       providerEmail: user?.email,
       status: 'Available',
@@ -56,10 +57,11 @@ const AddCar = ({ onCarAdded }) => {
       );
 
       toast.success('Car added successfully!');
-      if (onCarAdded) onCarAdded(data); // update car list
+      if (onCarAdded) onCarAdded(data);
 
       setFormData({
         name: '',
+        model: '',
         description: '',
         category: 'Select Category',
         pricePerDay: '',
@@ -87,6 +89,15 @@ const AddCar = ({ onCarAdded }) => {
           value={formData.name}
           onChange={handleChange}
           placeholder="Car Name"
+          className="w-full border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          name="model"
+          value={formData.model}
+          onChange={handleChange}
+          placeholder="Model Name"
           className="w-full border p-2 rounded"
           required
         />
