@@ -20,7 +20,7 @@ const CarCard = ({ car }) => {
   };
 
   return (
-    <div className="w-full border border-gray-200 rounded-xl bg-white shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 overflow-hidden">
+    <div className="w-full border border-gray-200 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 overflow-hidden">
       {/* Car Image */}
       <div className="w-full h-60 sm:h-64 md:h-72 lg:h-80 bg-gray-100 overflow-hidden relative">
         <img

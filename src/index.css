@@ -3,6 +3,7 @@
 @plugin "daisyui" {
   themes: light --prefersdark, dark, cupcake;
 }
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 * {
   font-family: 'Inter', sans-serif;
 }

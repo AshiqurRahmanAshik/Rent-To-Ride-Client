@@ -45,7 +45,7 @@ const BrowseCars = () => {
     setCars((prev) => [...prev, newCar]);
   };
 
-  // 🔹 Spinner Loader
+  //  Spinner Loader
   if (loading) {
     return <LoadingSpinner />;
   }

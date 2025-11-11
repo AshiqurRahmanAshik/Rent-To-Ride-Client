@@ -36,7 +36,7 @@ const testimonials = [
 
 export default function TrustedTestimonials() {
   return (
-    <div className="bg-gradient-to-b from-gray-50 to-white py-20 px-4">
+    <div className=" py-20 px-4">
       <div className="relative max-w-6xl mx-auto">
         {/* Images Grid */}
         <div className="flex flex-wrap justify-center -space-x-4 sm:-space-x-6 -space-y-8 sm:-space-y-10 z-10 relative">
