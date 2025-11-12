@@ -6,10 +6,11 @@ import { AuthContext } from '../providers/AuthProvider';
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const navigate = useNavigate();
 
-  // ✅ Apply theme globally
+  // Apply theme globally
   useEffect(() => {
     const html = document.documentElement;
     html.setAttribute('data-theme', theme);
@@ -23,6 +24,7 @@ const Navbar = () => {
   const handleProfileUpdate = () => {
     navigate('/update-profile');
     setIsMobileMenuOpen(false);
+    setIsAccountDropdownOpen(false);
   };
 
   const activeClass =
@@ -128,7 +130,7 @@ const Navbar = () => {
             </>
           )}
 
-          {/* ✅ Theme Toggle (Desktop) */}
+          {/* Theme Toggle */}
           <div className="flex items-center ml-4">
             <label className="flex items-center cursor-pointer gap-2">
               <input
@@ -144,7 +146,7 @@ const Navbar = () => {
           </div>
         </ul>
 
-        {/* ✅ Profile Dropdown */}
+        {/* Profile Dropdown */}
         {user && (
           <div className="dropdown dropdown-end ml-4 z-50">
             <div tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -197,7 +199,7 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* ✅ Mobile Menu */}
+      {/* Mobile Menu */}
       <div className="md:hidden flex-none">
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -255,7 +257,7 @@ const Navbar = () => {
                 </NavLink>
               </li>
 
-              {/* ✅ Theme Toggle (Mobile) */}
+              {/* Theme Toggle */}
               <li>
                 <div className="flex items-center justify-between">
                   <span className="text-sm">
@@ -270,35 +272,78 @@ const Navbar = () => {
                 </div>
               </li>
 
-              {/* ✅ Profile Actions (Mobile) */}
+              {/* User Links */}
               {user && (
                 <>
                   <li>
                     <button
-                      onClick={handleProfileUpdate}
-                      className={`w-full text-left py-1 rounded ${
+                      onClick={() =>
+                        setIsAccountDropdownOpen(!isAccountDropdownOpen)
+                      }
+                      className={`w-full text-left py-2 rounded flex justify-between items-center ${
                         theme === 'dark'
                           ? 'hover:bg-gray-700'
                           : 'hover:bg-gray-200'
                       }`}
                     >
-                      Update Profile
+                      My Account
+                      <span>{isAccountDropdownOpen ? '▲' : '▼'}</span>
                     </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => {
-                        logOut();
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className={`w-full text-left py-1 rounded ${
-                        theme === 'dark'
-                          ? 'bg-gray-700 hover:bg-gray-600'
-                          : 'bg-gray-200 hover:bg-gray-300'
-                      }`}
-                    >
-                      Log Out
-                    </button>
+                    {isAccountDropdownOpen && (
+                      <ul className="ml-2 flex flex-col gap-2 mt-2">
+                        <li>
+                          <NavLink
+                            to="/add-car"
+                            className={normalClass}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            Add Your Car
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            to="/my-listings"
+                            className={normalClass}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            My Listings
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            to="/my-bookings"
+                            className={normalClass}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            My Bookings
+                          </NavLink>
+                        </li>
+                        <li>
+                          <button
+                            onClick={handleProfileUpdate}
+                            className={`w-full text-left py-1 rounded ${
+                              theme === 'dark'
+                                ? 'hover:bg-gray-700'
+                                : 'hover:bg-gray-200'
+                            }`}
+                          >
+                            Update Profile
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            onClick={logOut}
+                            className={`w-full text-left py-1 rounded ${
+                              theme === 'dark'
+                                ? 'bg-gray-700 hover:bg-gray-600'
+                                : 'bg-gray-200 hover:bg-gray-300'
+                            }`}
+                          >
+                            Log Out
+                          </button>
+                        </li>
+                      </ul>
+                    )}
                   </li>
                 </>
               )}

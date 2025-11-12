@@ -153,7 +153,7 @@ const AddCar = ({ onCarAdded }) => {
         />
 
         {/* Provider Info */}
-        <div className="space-y-2 border p-4 rounded bg-gray-50">
+        <div className="space-y-2 border p-4 rounded ">
           <h2 className="text-center font-bold text-xl">
             Provider Information
           </h2>
@@ -161,13 +161,13 @@ const AddCar = ({ onCarAdded }) => {
             type="text"
             value={user.displayName}
             readOnly
-            className="w-full border p-2 rounded bg-gray-100"
+            className="w-full border p-2 rounded "
           />
           <input
             type="email"
             value={user.email}
             readOnly
-            className="w-full border p-2 rounded bg-gray-100"
+            className="w-full border p-2 rounded "
           />
         </div>
 

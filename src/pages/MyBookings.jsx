@@ -65,7 +65,7 @@ const MyBookings = () => {
           </thead>
           <tbody>
             {bookings.map((b) => (
-              <tr key={b._id} className="hover:bg-gray-50">
+              <tr key={b._id} className="">
                 <td className="px-4 py-2 border-b">
                   <img
                     src={b.image}

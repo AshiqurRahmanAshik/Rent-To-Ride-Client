@@ -102,7 +102,7 @@ const MyListings = () => {
             </thead>
             <tbody>
               {cars.map((car) => (
-                <tr key={car._id} className="text-center hover:bg-gray-50">
+                <tr key={car._id} className="text-center">
                   <td className="py-2 px-4 border-b">{car.name}</td>
                   <td className="py-2 px-4 border-b">{car.category}</td>
                   <td className="py-2 px-4 border-b">${car.pricePerDay}</td>
