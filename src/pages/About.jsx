@@ -3,7 +3,7 @@ import { FaCar, FaHandshake, FaLeaf } from 'react-icons/fa';
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-800">
+    <div className="min-h-screen">
       {/* Hero Section */}
       <section className="bg-linear-to-r from-blue-600 to-sky-400 text-white py-16 px-6 text-center">
         <h1 className="text-4xl font-bold mb-3">
@@ -21,7 +21,7 @@ const About = () => {
           <h2 className="text-2xl font-semibold mb-3 text-blue-600 flex items-center gap-2">
             <FaCar /> Our Mission
           </h2>
-          <p className="text-gray-700 leading-relaxed">
+          <p className=" leading-relaxed">
             Our mission is to revolutionize car rental experiences by offering
             transparent pricing, easy booking, and top-quality vehicles for
             everyone. Whether you need a car for business, travel, or weekend
@@ -33,7 +33,7 @@ const About = () => {
           <h2 className="text-2xl font-semibold mb-3 text-blue-600 flex items-center gap-2">
             <FaHandshake /> Our Vision
           </h2>
-          <p className="text-gray-700 leading-relaxed">
+          <p className=" leading-relaxed">
             We envision a world where transportation is hassle-free and
             sustainable. Our goal is to integrate eco-friendly options and
             digital convenience for modern travelers.
@@ -42,13 +42,13 @@ const About = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="bg-white py-16 px-6">
+      <section className=" py-16 px-6">
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-10 text-blue-600">
             Why Choose Us?
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-blue-50 p-6 rounded-2xl shadow">
+            <div className=" p-6 rounded-2xl shadow">
               <FaCar className="text-blue-500 text-4xl mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">Wide Range of Cars</h3>
               <p>
@@ -56,14 +56,14 @@ const About = () => {
                 budget.
               </p>
             </div>
-            <div className="bg-blue-50 p-6 rounded-2xl shadow">
+            <div className=" p-6 rounded-2xl shadow">
               <FaHandshake className="text-blue-500 text-4xl mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">
                 Transparent Service
               </h3>
               <p>No hidden charges — what you see is what you pay.</p>
             </div>
-            <div className="bg-blue-50 p-6 rounded-2xl shadow">
+            <div className=" p-6 rounded-2xl shadow">
               <FaLeaf className="text-blue-500 text-4xl mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">
                 Eco-Friendly Options

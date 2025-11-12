@@ -42,7 +42,7 @@ const teamMembers = [
 
 const Team = () => {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16">
       <div className="max-w-6xl mx-auto px-6 text-center">
         <h2 className="text-4xl font-bold text-blue-600 mb-4">Meet Our Team</h2>
         <p className="text-gray-600 max-w-2xl mx-auto mb-12">
@@ -54,16 +54,14 @@ const Team = () => {
           {teamMembers.map((member) => (
             <div
               key={member.id}
-              className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6"
+              className=" rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6"
             >
               <img
                 src={member.image}
                 alt={member.name}
                 className="w-32 h-32 rounded-full mx-auto object-cover mb-4"
               />
-              <h3 className="text-xl font-semibold text-gray-800">
-                {member.name}
-              </h3>
+              <h3 className="text-xl font-semibold">{member.name}</h3>
               <p className="text-blue-500 text-sm mb-4">{member.role}</p>
             </div>
           ))}
