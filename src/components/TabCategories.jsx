@@ -53,7 +53,7 @@ const TabCategories = () => {
         </p>
 
         {/* Search Input */}
-        <div className="flex justify-center mb-6">
+        <div className="flex flex-col items-center mb-6">
           <input
             type="text"
             placeholder="Search cars by name, model, or category..."
@@ -61,6 +61,17 @@ const TabCategories = () => {
             onChange={(e) => setSearch(e.target.value)}
             className="w-full max-w-md px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+
+          {/* ✅ Display number of matches */}
+          <p className="mt-2 text-sm text-gray-600">
+            {search
+              ? filteredCars.length > 0
+                ? `🔍 ${filteredCars.length} car${
+                    filteredCars.length > 1 ? 's' : ''
+                  } found`
+                : '❌ No cars found'
+              : `Total Cars: ${cars.length}`}
+          </p>
         </div>
 
         <div className="flex items-center justify-center">
@@ -83,6 +94,7 @@ const TabCategories = () => {
             ))}
           </div>
         </TabPanel>
+
         {/* Featured Cars */}
         <TabPanel>
           <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3">

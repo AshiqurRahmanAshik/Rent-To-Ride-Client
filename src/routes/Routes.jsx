@@ -12,6 +12,9 @@ import ErrorPage from '../pages/ErrorPage';
 import BrowseCars from '../pages/BrowseCars';
 import SuccessStories from '../components/SuccessStories';
 import UpdateProfile from '../pages/UpdateProfile';
+import About from '../pages/About';
+import Team from '../pages/Team';
+import PrivacyPolicy from '../pages/PrivacyPolicy';
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +28,9 @@ export const router = createBrowserRouter([
       { path: '/browse-cars', element: <BrowseCars /> },
       { path: '/success-stories', element: <SuccessStories /> },
       { path: '/update-profile', element: <UpdateProfile /> },
+      { path: '/about', element: <About /> },
+      { path: '/team', element: <Team /> },
+      { path: '/privacy', element: <PrivacyPolicy /> },
 
       // Car Details with loader
       {
