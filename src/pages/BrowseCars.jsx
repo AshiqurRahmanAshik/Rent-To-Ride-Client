@@ -35,7 +35,7 @@ const BrowseCars = () => {
   // Handle view details button
   const handleViewDetails = (carId) => {
     if (!user) {
-      toast.info('Please login to view car details!', { autoClose: 2000 });
+      toast('Please login to view car details!', { autoClose: 2000 });
       navigate('/login', { state: { from: `/cars/${carId}` } });
     } else {
       navigate(`/cars/${carId}`);

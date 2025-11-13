@@ -39,10 +39,14 @@ const CarCard = ({ car }) => {
           className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105"
         />
 
-        {/* Booked Badge */}
-        {status === 'Booked' && (
+        {/* Booked / Available Badge */}
+        {status === 'Booked' ? (
           <span className="absolute top-2 right-2 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
             Booked
+          </span>
+        ) : (
+          <span className="absolute top-2 right-2 bg-green-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+            Available
           </span>
         )}
       </div>
