@@ -48,7 +48,6 @@ export const router = createBrowserRouter([
             return res.json();
           } catch (err) {
             console.error(err);
-            // IMPORTANT: Return null so the component can handle it
             return null;
           }
         },

@@ -1,14 +1,14 @@
 // TabCategories.jsx
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
-import CarCard from './CarCard';
-import axios from 'axios';
-import { useEffect, useState, useMemo } from 'react';
-import { useNavigate } from 'react-router';
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
+import CarCard from "./CarCard";
+import axios from "axios";
+import { useEffect, useState, useMemo } from "react";
+import { useNavigate } from "react-router";
 
 const TabCategories = () => {
   const [cars, setCars] = useState([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,10 +17,10 @@ const TabCategories = () => {
         const { data } = await axios.get(
           `${import.meta.env.VITE_API_URL}/cars`
         );
-        console.log('Fetched cars:', data);
+        console.log("Fetched cars:", data);
         setCars(data);
       } catch (err) {
-        console.error('Error fetching cars:', err);
+        console.error("Error fetching cars:", err);
       }
     };
     getData();
@@ -67,9 +67,9 @@ const TabCategories = () => {
             {search
               ? filteredCars.length > 0
                 ? `🔍 ${filteredCars.length} car${
-                    filteredCars.length > 1 ? 's' : ''
+                    filteredCars.length > 1 ? "s" : ""
                   } found`
-                : '❌ No cars found'
+                : "❌ No cars found"
               : `Total Cars: ${cars.length}`}
           </p>
         </div>
@@ -84,7 +84,7 @@ const TabCategories = () => {
 
         {/* All Cars */}
         <TabPanel>
-          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-4">
             {filteredCars.map((car) => (
               <CarCard
                 key={car._id}
@@ -97,9 +97,9 @@ const TabCategories = () => {
 
         {/* Featured Cars */}
         <TabPanel>
-          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-4">
             {filteredCars
-              .filter((c) => c.type?.toLowerCase() === 'featured')
+              .filter((c) => c.type?.toLowerCase() === "featured")
               .map((car) => (
                 <CarCard
                   key={car._id}
@@ -112,9 +112,9 @@ const TabCategories = () => {
 
         {/* Top Rated Cars */}
         <TabPanel>
-          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 lg:grid-cols-4">
             {filteredCars
-              .filter((c) => c.type?.toLowerCase() === 'top rated')
+              .filter((c) => c.type?.toLowerCase() === "top rated")
               .map((car) => (
                 <CarCard
                   key={car._id}
