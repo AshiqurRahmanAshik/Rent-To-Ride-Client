@@ -1,20 +1,20 @@
-import { Link, useLocation, useNavigate } from 'react-router';
-import bgImg from '../../assets/loginImg.png';
-import logo from '../../assets/carLogo.png';
-import { useContext, useState } from 'react';
-import { AuthContext } from '../../providers/AuthProvider';
-import { toast } from 'react-toastify';
+import { Link, useLocation, useNavigate } from "react-router";
+import bgImg from "../../assets/loginImg.png";
+import logo from "../../assets/sport-car.png";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
+import { toast } from "react-toastify";
 import {
   AiFillGoogleCircle,
   AiOutlineEye,
   AiOutlineEyeInvisible,
-} from 'react-icons/ai';
-import { FcGoogle } from 'react-icons/fc';
+} from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location?.state || '/';
+  const from = location?.state || "/";
   const { signIn, signInWithGoogle } = useContext(AuthContext);
 
   const [showPassword, setShowPassword] = useState(false); // 👈 state for eye toggle
@@ -22,22 +22,22 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
-      toast.success('Signin Successful');
+      toast.success("Signin Successful");
       navigate(from, { replace: true });
     } catch (err) {
       console.log(err);
-      if (err.code === 'auth/invalid-email') {
-        toast.error('Invalid email address');
-      } else if (err.code === 'auth/user-not-found') {
-        toast.error('No user found with this email');
-      } else if (err.code === 'auth/wrong-password') {
-        toast.error('Incorrect password');
-      } else if (err.code === 'auth/too-many-requests') {
-        toast.error('Too many login attempts. Please try again later.');
-      } else if (err.code === 'auth/popup-closed-by-user') {
-        toast.error('Google sign-in popup closed. Try again.');
+      if (err.code === "auth/invalid-email") {
+        toast.error("Invalid email address");
+      } else if (err.code === "auth/user-not-found") {
+        toast.error("No user found with this email");
+      } else if (err.code === "auth/wrong-password") {
+        toast.error("Incorrect password");
+      } else if (err.code === "auth/too-many-requests") {
+        toast.error("Too many login attempts. Please try again later.");
+      } else if (err.code === "auth/popup-closed-by-user") {
+        toast.error("Google sign-in popup closed. Try again.");
       } else {
-        toast.error('Something went wrong. Please try again.');
+        toast.error("Something went wrong. Please try again.");
       }
     }
   };
@@ -49,22 +49,22 @@ const Login = () => {
     const pass = form.password.value;
     try {
       await signIn(email, pass);
-      toast.success('Signin Successful');
+      toast.success("Signin Successful");
       navigate(from, { replace: true });
     } catch (err) {
       console.log(err);
-      if (err.code === 'auth/invalid-email') {
-        toast.error('Invalid email address');
-      } else if (err.code === 'auth/user-not-found') {
-        toast.error('No user found with this email');
-      } else if (err.code === 'auth/wrong-password') {
-        toast.error('Incorrect password');
-      } else if (err.code === 'auth/too-many-requests') {
-        toast.error('Too many login attempts. Please try again later.');
-      } else if (err.code === 'auth/popup-closed-by-user') {
-        toast.error('Google sign-in popup closed. Try again.');
+      if (err.code === "auth/invalid-email") {
+        toast.error("Invalid email address");
+      } else if (err.code === "auth/user-not-found") {
+        toast.error("No user found with this email");
+      } else if (err.code === "auth/wrong-password") {
+        toast.error("Incorrect password");
+      } else if (err.code === "auth/too-many-requests") {
+        toast.error("Too many login attempts. Please try again later.");
+      } else if (err.code === "auth/popup-closed-by-user") {
+        toast.error("Google sign-in popup closed. Try again.");
       } else {
-        toast.error('Something went wrong. Please try again.');
+        toast.error("Something went wrong. Please try again.");
       }
     }
   };
@@ -132,7 +132,7 @@ const Login = () => {
                 autoComplete="current-password"
                 name="password"
                 className="block w-full px-4 py-2  border rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
               />
 
               <div

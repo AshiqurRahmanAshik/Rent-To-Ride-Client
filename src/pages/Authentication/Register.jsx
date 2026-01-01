@@ -1,11 +1,11 @@
-import { Link, useNavigate } from 'react-router';
-import bgImg from '../../assets/loginImg.png';
-import logo from '../../assets/carLogo.png';
-import { useContext, useState } from 'react';
-import { AuthContext } from '../../providers/AuthProvider';
-import { toast } from 'react-toastify';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { FcGoogle } from 'react-icons/fc';
+import { Link, useNavigate } from "react-router";
+import bgImg from "../../assets/loginImg.png";
+import logo from "../../assets/sport-car.png";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
+import { toast } from "react-toastify";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -26,17 +26,17 @@ const Registration = () => {
     const lowercasePattern = /[a-z]/;
 
     if (!uppercasePattern.test(pass)) {
-      toast.error('Password must contain at least one uppercase letter');
+      toast.error("Password must contain at least one uppercase letter");
       return;
     }
 
     if (!lowercasePattern.test(pass)) {
-      toast.error('Password must contain at least one lowercase letter');
+      toast.error("Password must contain at least one lowercase letter");
       return;
     }
 
     if (pass.length < 6) {
-      toast.error('Password must be at least 6 characters long');
+      toast.error("Password must be at least 6 characters long");
       return;
     }
 
@@ -44,25 +44,25 @@ const Registration = () => {
       const result = await createUser(email, pass);
       await updateUserProfile(name, photo);
       setUser({ ...result.user, photoURL: photo, displayName: name });
-      toast.success('Signup Successful');
-      navigate('/');
+      toast.success("Signup Successful");
+      navigate("/");
     } catch (err) {
       console.log(err);
       switch (err.code) {
-        case 'auth/email-already-in-use':
-          toast.error('Email already in use');
+        case "auth/email-already-in-use":
+          toast.error("Email already in use");
           break;
-        case 'auth/invalid-email':
-          toast.error('Invalid email address');
+        case "auth/invalid-email":
+          toast.error("Invalid email address");
           break;
-        case 'auth/weak-password':
-          toast.error('Password should be at least 6 characters');
+        case "auth/weak-password":
+          toast.error("Password should be at least 6 characters");
           break;
-        case 'auth/too-many-requests':
-          toast.error('Too many attempts. Try again later.');
+        case "auth/too-many-requests":
+          toast.error("Too many attempts. Try again later.");
           break;
         default:
-          toast.error(err.message || 'Something went wrong. Please try again.');
+          toast.error(err.message || "Something went wrong. Please try again.");
       }
     }
   };
@@ -71,25 +71,25 @@ const Registration = () => {
     try {
       const result = await signInWithGoogle();
       setUser(result.user);
-      toast.success('Signin Successful');
-      navigate('/');
+      toast.success("Signin Successful");
+      navigate("/");
     } catch (err) {
       console.log(err);
       switch (err.code) {
-        case 'auth/email-already-in-use':
-          toast.error('Email already in use');
+        case "auth/email-already-in-use":
+          toast.error("Email already in use");
           break;
-        case 'auth/invalid-email':
-          toast.error('Invalid email address');
+        case "auth/invalid-email":
+          toast.error("Invalid email address");
           break;
-        case 'auth/weak-password':
-          toast.error('Password should be at least 6 characters');
+        case "auth/weak-password":
+          toast.error("Password should be at least 6 characters");
           break;
-        case 'auth/too-many-requests':
-          toast.error('Too many attempts. Try again later.');
+        case "auth/too-many-requests":
+          toast.error("Too many attempts. Try again later.");
           break;
         default:
-          toast.error(err.message || 'Something went wrong. Please try again.');
+          toast.error(err.message || "Something went wrong. Please try again.");
       }
     }
   };
@@ -182,7 +182,7 @@ const Registration = () => {
                 id="password"
                 name="password"
                 className="block w-full px-4 py-2 border rounded-lg focus:border-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none"
-                type={showPass ? 'text' : 'password'}
+                type={showPass ? "text" : "password"}
               />
               <span
                 onClick={() => setShowPass(!showPass)}

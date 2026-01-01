@@ -3,9 +3,9 @@ import {
   FaInstagram,
   FaGithub,
   FaLinkedinIn,
-} from 'react-icons/fa';
-import { Link } from 'react-router';
-import logo from '../assets/carLogo.png';
+} from "react-icons/fa";
+import { Link } from "react-router";
+import logo from "../assets/sport-car.png";
 
 const Footer = () => {
   return (

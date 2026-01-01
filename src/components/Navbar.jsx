@@ -1,48 +1,49 @@
-import { useContext, useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router';
-import logo from '../assets/carLogo.png';
-import { AuthContext } from '../providers/AuthProvider';
+import { useContext, useState, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router";
+import logo from "../assets/sport-car.png";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const navigate = useNavigate();
 
   // Apply theme globally
   useEffect(() => {
     const html = document.documentElement;
-    html.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+    html.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   const handleTheme = (checked) => {
-    setTheme(checked ? 'dark' : 'light');
+    setTheme(checked ? "dark" : "light");
   };
 
   const handleProfileUpdate = () => {
-    navigate('/update-profile');
+    navigate("/update-profile");
     setIsMobileMenuOpen(false);
     setIsAccountDropdownOpen(false);
   };
 
   const activeClass =
-    theme === 'dark'
-      ? 'text-blue-400 font-semibold'
-      : 'text-blue-600 font-semibold';
-  const normalClass = theme === 'dark' ? 'text-gray-200' : 'text-gray-700';
+    theme === "dark"
+      ? "text-blue-400 font-semibold"
+      : "text-blue-600 font-semibold";
+  const normalClass = theme === "dark" ? "text-gray-200" : "text-gray-700";
 
   return (
     <div
-      className={`navbar shadow-sm container px-4 mx-auto relative transition-all duration-300 ${
-        theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-base-100 text-black'
+      className={`navbar shadow-sm relative transition-all duration-300 ${
+        theme === "dark" ? "bg-gray-900 text-white" : "bg-base-100 text-black"
       }`}
     >
       {/* Logo */}
       <div className="flex-1">
         <NavLink to="/" className="flex items-center gap-2">
-          <img className="w-24" src={logo} alt="Logo" />
+          <img className="w-12" src={logo} alt="Logo" />
+          <span className="font-bold">Rent To Go</span>
         </NavLink>
       </div>
 
@@ -136,11 +137,11 @@ const Navbar = () => {
               <input
                 type="checkbox"
                 onChange={(e) => handleTheme(e.target.checked)}
-                checked={theme === 'dark'}
+                checked={theme === "dark"}
                 className="toggle toggle-sm"
               />
               <span className="text-sm">
-                {theme === 'dark' ? 'Dark' : 'Light'}
+                {theme === "dark" ? "Dark" : "Light"}
               </span>
             </label>
           </div>
@@ -161,9 +162,9 @@ const Navbar = () => {
             <ul
               tabIndex={0}
               className={`menu menu-sm dropdown-content mt-3 p-2 shadow rounded-box w-52 ${
-                theme === 'dark'
-                  ? 'bg-gray-800 text-white'
-                  : 'bg-base-100 text-black'
+                theme === "dark"
+                  ? "bg-gray-800 text-white"
+                  : "bg-base-100 text-black"
               }`}
             >
               <li>
@@ -176,7 +177,7 @@ const Navbar = () => {
                 <button
                   onClick={handleProfileUpdate}
                   className={`w-full text-left py-1 rounded ${
-                    theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-gray-200'
+                    theme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-200"
                   }`}
                 >
                   Update Profile
@@ -186,9 +187,9 @@ const Navbar = () => {
                 <button
                   onClick={logOut}
                   className={`w-full text-left py-1 rounded ${
-                    theme === 'dark'
-                      ? 'bg-gray-700 hover:bg-gray-600'
-                      : 'bg-gray-200 hover:bg-gray-300'
+                    theme === "dark"
+                      ? "bg-gray-700 hover:bg-gray-600"
+                      : "bg-gray-200 hover:bg-gray-300"
                   }`}
                 >
                   Log Out
@@ -218,8 +219,8 @@ const Navbar = () => {
               strokeWidth="2"
               d={
                 isMobileMenuOpen
-                  ? 'M6 18L18 6M6 6l12 12'
-                  : 'M4 6h16M4 12h16M4 18h16'
+                  ? "M6 18L18 6M6 6l12 12"
+                  : "M4 6h16M4 12h16M4 18h16"
               }
             />
           </svg>
@@ -228,9 +229,9 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div
             className={`absolute top-full left-0 w-full shadow-md z-40 transition-all duration-300 ${
-              theme === 'dark'
-                ? 'bg-gray-900 text-white'
-                : 'bg-base-100 text-black'
+              theme === "dark"
+                ? "bg-gray-900 text-white"
+                : "bg-base-100 text-black"
             }`}
           >
             <ul className="flex flex-col p-4 gap-3">
@@ -261,12 +262,12 @@ const Navbar = () => {
               <li>
                 <div className="flex items-center justify-between">
                   <span className="text-sm">
-                    {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+                    {theme === "dark" ? "Dark Mode" : "Light Mode"}
                   </span>
                   <input
                     type="checkbox"
                     onChange={(e) => handleTheme(e.target.checked)}
-                    checked={theme === 'dark'}
+                    checked={theme === "dark"}
                     className="toggle toggle-sm"
                   />
                 </div>
@@ -281,13 +282,13 @@ const Navbar = () => {
                         setIsAccountDropdownOpen(!isAccountDropdownOpen)
                       }
                       className={`w-full text-left py-2 rounded flex justify-between items-center ${
-                        theme === 'dark'
-                          ? 'hover:bg-gray-700'
-                          : 'hover:bg-gray-200'
+                        theme === "dark"
+                          ? "hover:bg-gray-700"
+                          : "hover:bg-gray-200"
                       }`}
                     >
                       My Account
-                      <span>{isAccountDropdownOpen ? '▲' : '▼'}</span>
+                      <span>{isAccountDropdownOpen ? "▲" : "▼"}</span>
                     </button>
                     {isAccountDropdownOpen && (
                       <ul className="ml-2 flex flex-col gap-2 mt-2">
@@ -322,9 +323,9 @@ const Navbar = () => {
                           <button
                             onClick={handleProfileUpdate}
                             className={`w-full text-left py-1 rounded ${
-                              theme === 'dark'
-                                ? 'hover:bg-gray-700'
-                                : 'hover:bg-gray-200'
+                              theme === "dark"
+                                ? "hover:bg-gray-700"
+                                : "hover:bg-gray-200"
                             }`}
                           >
                             Update Profile
@@ -334,9 +335,9 @@ const Navbar = () => {
                           <button
                             onClick={logOut}
                             className={`w-full text-left py-1 rounded ${
-                              theme === 'dark'
-                                ? 'bg-gray-700 hover:bg-gray-600'
-                                : 'bg-gray-200 hover:bg-gray-300'
+                              theme === "dark"
+                                ? "bg-gray-700 hover:bg-gray-600"
+                                : "bg-gray-200 hover:bg-gray-300"
                             }`}
                           >
                             Log Out
