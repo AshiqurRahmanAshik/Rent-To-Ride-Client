@@ -35,7 +35,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`navbar shadow-sm relative transition-all duration-300 ${
+      className={`navbar shadow-sm fixed top-0 z-50 transition-all duration-300  ${
         theme === "dark" ? "bg-gray-900 text-white" : "bg-base-100 text-black"
       }`}
     >

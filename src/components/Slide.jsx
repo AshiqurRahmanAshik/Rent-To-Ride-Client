@@ -1,9 +1,9 @@
-import { Link } from 'react-router';
+import { Link } from "react-router";
 
 const Slide = ({ image, text }) => {
   return (
     <div
-      className="w-full bg-center bg-cover h-152"
+      className="w-full bg-center bg-cover h-152 my-15"
       style={{
         backgroundImage: `url(${image})`,
       }}
