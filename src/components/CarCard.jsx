@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router';
-import { useContext } from 'react';
-import { AuthContext } from '../providers/AuthProvider';
+import { useNavigate } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider";
 
 const CarCard = ({ car }) => {
   const { user } = useContext(AuthContext);
@@ -21,12 +21,13 @@ const CarCard = ({ car }) => {
   } = car;
 
   const handleViewDetails = () => {
-    if (!user) {
-      // Redirect to login and save intended path
-      navigate('/login', { state: `/car/${_id}` });
-    } else {
-      navigate(`/car/${_id}`);
-    }
+    // if (!user) {
+    //   // Redirect to login and save intended path
+    //   navigate('/login', { state: `/car/${_id}` });
+    // } else {
+    //   navigate(`/car/${_id}`);
+    // }
+    navigate(`/car/${_id}`);
   };
 
   return (
@@ -34,13 +35,13 @@ const CarCard = ({ car }) => {
       {/* Car Image */}
       <div className="w-full h-60 sm:h-64 md:h-72 lg:h-80 bg-gray-100 overflow-hidden relative">
         <img
-          src={image || 'https://via.placeholder.com/400x225?text=Car+Image'}
+          src={image || "https://via.placeholder.com/400x225?text=Car+Image"}
           alt={name}
           className="w-full h-full object-cover object-center transition-transform duration-300 hover:scale-105"
         />
 
         {/* Booked / Available Badge */}
-        {status === 'Booked' ? (
+        {status === "Booked" ? (
           <span className="absolute top-2 right-2 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
             Booked
           </span>
@@ -64,7 +65,7 @@ const CarCard = ({ car }) => {
         <p className="text-sm line-clamp-3">{description}</p>
 
         <div className="flex justify-between items-center my-2 font-semibold">
-          <span>Provider: {providerName || 'N/A'}</span>
+          <span>Provider: {providerName || "N/A"}</span>
           <span className="text-blue-600">${pricePerDay}/day</span>
         </div>
 
@@ -72,13 +73,13 @@ const CarCard = ({ car }) => {
         <button
           onClick={handleViewDetails}
           className={`w-full mt-3 py-2 rounded-lg font-medium text-center block transition ${
-            status === 'Booked'
-              ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-blue-600 hover:bg-blue-700 text-white'
+            status === "Booked"
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700 text-white"
           }`}
-          disabled={status === 'Booked'}
+          disabled={status === "Booked"}
         >
-          {status === 'Booked' ? 'Booked' : 'View Details'}
+          {status === "Booked" ? "Booked" : "View Details"}
         </button>
       </div>
     </div>
