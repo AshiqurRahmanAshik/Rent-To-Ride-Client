@@ -3,8 +3,6 @@ import axios from "axios";
 import {
   BarChart,
   Bar,
-  LineChart,
-  Line,
   PieChart,
   Pie,
   Cell,
@@ -33,7 +31,7 @@ const AdminDashboard = () => {
   const [recentActivity, setRecentActivity] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const API_URL = "http://localhost:9000"; // Update with your API URL
+  const API_URL = "http://localhost:9000";
 
   useEffect(() => {
     fetchAdminDashboard();

@@ -10,6 +10,9 @@ const Navbar = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const navigate = useNavigate();
 
+  // ✅ Check if user is admin
+  const isAdmin = user?.role === "admin";
+
   // Apply theme globally
   useEffect(() => {
     const html = document.documentElement;
@@ -71,7 +74,8 @@ const Navbar = () => {
             </NavLink>
           </li>
 
-          {user && (
+          {/* ✅ Show these links only for non-admin users */}
+          {user && !isAdmin && (
             <>
               <li>
                 <NavLink
@@ -104,6 +108,20 @@ const Navbar = () => {
                 </NavLink>
               </li>
             </>
+          )}
+
+          {/* ✅ Show Admin Dashboard link for admin */}
+          {user && isAdmin && (
+            <li>
+              <NavLink
+                to="/dashboard/admin"
+                className={({ isActive }) =>
+                  isActive ? activeClass : normalClass
+                }
+              >
+                Admin Panel
+              </NavLink>
+            </li>
           )}
 
           {!user && (
@@ -173,15 +191,15 @@ const Navbar = () => {
               <li>
                 <span className="text-sm opacity-70">{user.email}</span>
               </li>
-              {/* ✅ Dashboard Link in Dropdown - Added */}
+              {/* ✅ Dashboard Link - Show appropriate dashboard based on role */}
               <li>
                 <NavLink
-                  to="/dashboard"
+                  to={isAdmin ? "/dashboard/admin" : "/dashboard"}
                   className={`w-full text-left py-1 rounded ${
                     theme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-200"
                   }`}
                 >
-                  📊 Dashboard
+                  📊 {isAdmin ? "Admin Dashboard" : "Dashboard"}
                 </NavLink>
               </li>
               <li>
@@ -269,17 +287,17 @@ const Navbar = () => {
                 </NavLink>
               </li>
 
-              {/* ✅ Dashboard Link for Mobile - Added */}
+              {/* ✅ Dashboard Link for Mobile - Different for admin */}
               {user && (
                 <li>
                   <NavLink
-                    to="/dashboard"
+                    to={isAdmin ? "/dashboard/admin" : "/dashboard"}
                     className={({ isActive }) =>
                       isActive ? activeClass : normalClass
                     }
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    📊 Dashboard
+                    📊 {isAdmin ? "Admin Panel" : "Dashboard"}
                   </NavLink>
                 </li>
               )}
@@ -318,33 +336,38 @@ const Navbar = () => {
                     </button>
                     {isAccountDropdownOpen && (
                       <ul className="ml-2 flex flex-col gap-2 mt-2">
-                        <li>
-                          <NavLink
-                            to="/add-car"
-                            className={normalClass}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            Add Your Car
-                          </NavLink>
-                        </li>
-                        <li>
-                          <NavLink
-                            to="/my-listings"
-                            className={normalClass}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            My Listings
-                          </NavLink>
-                        </li>
-                        <li>
-                          <NavLink
-                            to="/my-bookings"
-                            className={normalClass}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            My Bookings
-                          </NavLink>
-                        </li>
+                        {/* ✅ Show these links only for non-admin users */}
+                        {!isAdmin && (
+                          <>
+                            <li>
+                              <NavLink
+                                to="/add-car"
+                                className={normalClass}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                Add Your Car
+                              </NavLink>
+                            </li>
+                            <li>
+                              <NavLink
+                                to="/my-listings"
+                                className={normalClass}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                My Listings
+                              </NavLink>
+                            </li>
+                            <li>
+                              <NavLink
+                                to="/my-bookings"
+                                className={normalClass}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                My Bookings
+                              </NavLink>
+                            </li>
+                          </>
+                        )}
                         <li>
                           <button
                             onClick={handleProfileUpdate}
