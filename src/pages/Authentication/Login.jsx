@@ -4,11 +4,8 @@ import logo from "../../assets/sport-car.png";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { toast } from "react-toastify";
-import {
-  AiFillGoogleCircle,
-  AiOutlineEye,
-  AiOutlineEyeInvisible,
-} from "react-icons/ai";
+import { useForm } from "react-hook-form";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
@@ -17,61 +14,84 @@ const Login = () => {
   const from = location?.state || "/";
   const { signIn, signInWithGoogle } = useContext(AuthContext);
 
-  const [showPassword, setShowPassword] = useState(false); // 👈 state for eye toggle
+  const [showPassword, setShowPassword] = useState(false);
+  const [authError, setAuthError] = useState("");
+
+  // React Hook Form setup
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
   const handleGoogleSignIn = async () => {
+    setAuthError("");
     try {
       await signInWithGoogle();
       toast.success("Signin Successful");
       navigate(from, { replace: true });
     } catch (err) {
       console.log(err);
+      let errorMessage = "";
+
       if (err.code === "auth/invalid-email") {
-        toast.error("Invalid email address");
+        errorMessage = "Invalid email address";
       } else if (err.code === "auth/user-not-found") {
-        toast.error("No user found with this email");
+        errorMessage = "No user found with this email";
       } else if (err.code === "auth/wrong-password") {
-        toast.error("Incorrect password");
+        errorMessage = "Incorrect password";
       } else if (err.code === "auth/too-many-requests") {
-        toast.error("Too many login attempts. Please try again later.");
+        errorMessage = "Too many login attempts. Please try again later.";
       } else if (err.code === "auth/popup-closed-by-user") {
-        toast.error("Google sign-in popup closed. Try again.");
+        errorMessage = "Google sign-in popup closed. Try again.";
       } else {
-        toast.error("Something went wrong. Please try again.");
+        errorMessage = "Something went wrong. Please try again.";
       }
+
+      setAuthError(errorMessage);
+      toast.error(errorMessage);
     }
   };
 
-  const handleSignIn = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const pass = form.password.value;
+  const onSubmit = async (data) => {
+    setAuthError("");
     try {
-      await signIn(email, pass);
+      await signIn(data.email, data.password);
       toast.success("Signin Successful");
       navigate(from, { replace: true });
     } catch (err) {
       console.log(err);
+      let errorMessage = "";
+
       if (err.code === "auth/invalid-email") {
-        toast.error("Invalid email address");
+        errorMessage = "Invalid email address";
+        setError("email", { type: "manual", message: errorMessage });
       } else if (err.code === "auth/user-not-found") {
-        toast.error("No user found with this email");
+        errorMessage = "No user found with this email";
+        setError("email", { type: "manual", message: errorMessage });
       } else if (err.code === "auth/wrong-password") {
-        toast.error("Incorrect password");
+        errorMessage = "Incorrect password";
+        setError("password", { type: "manual", message: errorMessage });
       } else if (err.code === "auth/too-many-requests") {
-        toast.error("Too many login attempts. Please try again later.");
-      } else if (err.code === "auth/popup-closed-by-user") {
-        toast.error("Google sign-in popup closed. Try again.");
+        errorMessage = "Too many login attempts. Please try again later.";
       } else {
-        toast.error("Something went wrong. Please try again.");
+        errorMessage = "Something went wrong. Please try again.";
       }
+
+      setAuthError(errorMessage);
+      toast.error(errorMessage);
     }
   };
 
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-306px)] my-12">
-      <div className="flex w-full max-w-sm mx-auto overflow-hidden  rounded-lg shadow-lg lg:max-w-4xl">
+      <div className="flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg lg:max-w-4xl">
         <div
           className="hidden bg-cover bg-center lg:block lg:w-1/2"
           style={{ backgroundImage: `url(${bgImg})` }}
@@ -82,11 +102,11 @@ const Login = () => {
             <img className="w-auto h-7 sm:h-8" src={logo} alt="" />
           </div>
 
-          <p className="mt-3 text-xl text-center ">Welcome back!</p>
+          <p className="mt-3 text-xl text-center">Welcome back!</p>
 
           <div
             onClick={handleGoogleSignIn}
-            className="flex cursor-pointer items-center justify-center mt-4  transition-colors duration-300 transform border rounded-lg "
+            className="flex cursor-pointer items-center justify-center mt-4 transition-colors duration-300 transform border rounded-lg"
           >
             <FcGoogle />
             <span className="w-5/6 px-4 py-3 font-bold text-center">
@@ -96,16 +116,22 @@ const Login = () => {
 
           <div className="flex items-center justify-between mt-4">
             <span className="w-1/5 border-b lg:w-1/4"></span>
-            <div className="text-xs text-center  uppercase hover:underline">
+            <div className="text-xs text-center uppercase hover:underline">
               or login with email
             </div>
             <span className="w-1/5 border-b dark:border-gray-400 lg:w-1/4"></span>
           </div>
 
-          <form onSubmit={handleSignIn}>
+          {authError && (
+            <div className="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+              <p className="text-sm">{authError}</p>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mt-4">
               <label
-                className="block mb-2 text-sm font-medium "
+                className="block mb-2 text-sm font-medium"
                 htmlFor="LoggingEmailAddress"
               >
                 Email Address
@@ -113,15 +139,32 @@ const Login = () => {
               <input
                 id="LoggingEmailAddress"
                 autoComplete="email"
-                name="email"
-                className="block w-full px-4 py-2  border rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid email address",
+                  },
+                })}
+                onChange={(e) => {
+                  setAuthError("");
+                  register("email").onChange(e);
+                }}
+                className={`block w-full px-4 py-2 border rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300 ${
+                  errors.email ? "border-red-500" : ""
+                }`}
                 type="email"
               />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             <div className="mt-4 relative">
               <label
-                className="block mb-2 text-sm font-medium "
+                className="block mb-2 text-sm font-medium"
                 htmlFor="loggingPassword"
               >
                 Password
@@ -130,8 +173,20 @@ const Login = () => {
               <input
                 id="loggingPassword"
                 autoComplete="current-password"
-                name="password"
-                className="block w-full px-4 py-2  border rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                })}
+                onChange={(e) => {
+                  setAuthError("");
+                  register("password").onChange(e);
+                }}
+                className={`block w-full px-4 py-2 border rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300 ${
+                  errors.password ? "border-red-500" : ""
+                }`}
                 type={showPassword ? "text" : "password"}
               />
 
@@ -141,21 +196,28 @@ const Login = () => {
               >
                 {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
               </div>
+
+              {errors.password && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             <div className="mt-6">
               <button
                 type="submit"
-                className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
+                disabled={isSubmitting}
+                className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Sign In
+                {isSubmitting ? "Signing In..." : "Sign In"}
               </button>
             </div>
           </form>
 
           <div className="flex items-center justify-between mt-4">
             <span className="w-1/5 border-b md:w-1/4"></span>
-            <Link to="/register" className="text-xs  uppercase hover:underline">
+            <Link to="/register" className="text-xs uppercase hover:underline">
               or sign up
             </Link>
             <span className="w-1/5 border-b md:w-1/4"></span>
