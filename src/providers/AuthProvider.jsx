@@ -18,7 +18,7 @@ const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
 // ✅ Backend API URL - আপনার backend URL দিন
-const API_URL = "http://localhost:9000";
+const API_URL = "https://server-rent-to-go.vercel.app";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);

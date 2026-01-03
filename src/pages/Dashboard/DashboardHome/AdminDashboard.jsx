@@ -31,7 +31,7 @@ const AdminDashboard = () => {
   const [recentActivity, setRecentActivity] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const API_URL = "http://localhost:9000";
+  const API_URL = "https://server-rent-to-go.vercel.app";
 
   useEffect(() => {
     fetchAdminDashboard();

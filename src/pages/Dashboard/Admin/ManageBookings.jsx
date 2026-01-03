@@ -12,7 +12,7 @@ const ManageBookings = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalBookings, setTotalBookings] = useState(0);
 
-  const API_URL = "http://localhost:9000"; // Update with your API URL
+  const API_URL = "https://server-rent-to-go.vercel.app"; // Update with your API URL
   const itemsPerPage = 10;
 
   useEffect(() => {

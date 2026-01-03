@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const ManageCars = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleteModal, setDeleteModal] = useState({ show: false, car: null });
-  const [filter, setFilter] = useState('all'); // all, available, booked
+  const [filter, setFilter] = useState("all"); // all, available, booked
 
-  const API_URL = 'http://localhost:9000'; // Update with your API URL
+  const API_URL = "https://server-rent-to-go.vercel.app"; // Update with your API URL
 
   useEffect(() => {
     fetchAllCars();
@@ -20,7 +20,7 @@ const ManageCars = () => {
       setCars(response.data);
       setLoading(false);
     } catch (error) {
-      console.error('Failed to fetch cars:', error);
+      console.error("Failed to fetch cars:", error);
       setLoading(false);
     }
   };
@@ -28,19 +28,19 @@ const ManageCars = () => {
   const handleDeleteCar = async (carId) => {
     try {
       await axios.delete(`${API_URL}/car/${carId}`);
-      setCars(cars.filter(car => car._id !== carId));
+      setCars(cars.filter((car) => car._id !== carId));
       setDeleteModal({ show: false, car: null });
-      alert('Car deleted successfully!');
+      alert("Car deleted successfully!");
     } catch (error) {
-      console.error('Failed to delete car:', error);
-      alert('Failed to delete car. Please try again.');
+      console.error("Failed to delete car:", error);
+      alert("Failed to delete car. Please try again.");
     }
   };
 
-  const filteredCars = cars.filter(car => {
-    if (filter === 'all') return true;
-    if (filter === 'available') return car.status === 'Available';
-    if (filter === 'booked') return car.status === 'Booked';
+  const filteredCars = cars.filter((car) => {
+    if (filter === "all") return true;
+    if (filter === "available") return car.status === "Available";
+    if (filter === "booked") return car.status === "Booked";
     return true;
   });
 
@@ -68,7 +68,9 @@ const ManageCars = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-600 text-sm">Total Cars</p>
-              <p className="text-3xl font-bold text-gray-800 mt-1">{cars.length}</p>
+              <p className="text-3xl font-bold text-gray-800 mt-1">
+                {cars.length}
+              </p>
             </div>
             <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-2xl">
               🚗
@@ -81,7 +83,7 @@ const ManageCars = () => {
             <div>
               <p className="text-gray-600 text-sm">Available</p>
               <p className="text-3xl font-bold text-green-600 mt-1">
-                {cars.filter(car => car.status === 'Available').length}
+                {cars.filter((car) => car.status === "Available").length}
               </p>
             </div>
             <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-2xl">
@@ -95,7 +97,7 @@ const ManageCars = () => {
             <div>
               <p className="text-gray-600 text-sm">Booked</p>
               <p className="text-3xl font-bold text-orange-600 mt-1">
-                {cars.filter(car => car.status === 'Booked').length}
+                {cars.filter((car) => car.status === "Booked").length}
               </p>
             </div>
             <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-2xl">
@@ -108,34 +110,34 @@ const ManageCars = () => {
       {/* Filter Buttons */}
       <div className="flex gap-3">
         <button
-          onClick={() => setFilter('all')}
+          onClick={() => setFilter("all")}
           className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-            filter === 'all'
-              ? 'bg-blue-500 text-white'
-              : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+            filter === "all"
+              ? "bg-blue-500 text-white"
+              : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
           }`}
         >
           All ({cars.length})
         </button>
         <button
-          onClick={() => setFilter('available')}
+          onClick={() => setFilter("available")}
           className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-            filter === 'available'
-              ? 'bg-green-500 text-white'
-              : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+            filter === "available"
+              ? "bg-green-500 text-white"
+              : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
           }`}
         >
-          Available ({cars.filter(c => c.status === 'Available').length})
+          Available ({cars.filter((c) => c.status === "Available").length})
         </button>
         <button
-          onClick={() => setFilter('booked')}
+          onClick={() => setFilter("booked")}
           className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-            filter === 'booked'
-              ? 'bg-orange-500 text-white'
-              : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+            filter === "booked"
+              ? "bg-orange-500 text-white"
+              : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
           }`}
         >
-          Booked ({cars.filter(c => c.status === 'Booked').length})
+          Booked ({cars.filter((c) => c.status === "Booked").length})
         </button>
       </div>
 
@@ -175,13 +177,19 @@ const ManageCars = () => {
                         alt={car.name}
                         className="w-16 h-16 rounded object-cover"
                       />
-                      <span className="font-medium text-gray-800">{car.name}</span>
+                      <span className="font-medium text-gray-800">
+                        {car.name}
+                      </span>
                     </div>
                   </td>
                   <td className="px-6 py-4">
                     <div>
-                      <p className="text-sm font-medium text-gray-800">{car.providerName}</p>
-                      <p className="text-xs text-gray-500">{car.providerEmail}</p>
+                      <p className="text-sm font-medium text-gray-800">
+                        {car.providerName}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {car.providerEmail}
+                      </p>
                     </div>
                   </td>
                   <td className="px-6 py-4">
@@ -195,9 +203,9 @@ const ManageCars = () => {
                   <td className="px-6 py-4">
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        car.status === 'Available'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-orange-100 text-orange-800'
+                        car.status === "Available"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-orange-100 text-orange-800"
                       }`}
                     >
                       {car.status}
@@ -228,8 +236,10 @@ const ManageCars = () => {
       {deleteModal.show && deleteModal.car && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">Delete Car?</h3>
-            
+            <h3 className="text-xl font-bold text-gray-800 mb-4">
+              Delete Car?
+            </h3>
+
             <div className="mb-6">
               <div className="flex items-center gap-3 bg-gray-50 p-4 rounded-lg">
                 <img
@@ -238,15 +248,22 @@ const ManageCars = () => {
                   className="w-20 h-20 rounded object-cover"
                 />
                 <div>
-                  <p className="font-medium text-gray-800">{deleteModal.car.name}</p>
-                  <p className="text-sm text-gray-600">{deleteModal.car.category}</p>
-                  <p className="text-sm text-gray-500">{deleteModal.car.providerName}</p>
+                  <p className="font-medium text-gray-800">
+                    {deleteModal.car.name}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {deleteModal.car.category}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {deleteModal.car.providerName}
+                  </p>
                 </div>
               </div>
             </div>
 
             <p className="text-gray-600 mb-6">
-              Are you sure you want to delete this car? This action cannot be undone.
+              Are you sure you want to delete this car? This action cannot be
+              undone.
             </p>
 
             <div className="flex gap-4">

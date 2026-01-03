@@ -32,7 +32,7 @@ const UserDashboard = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const API_URL = "http://localhost:9000"; // Update with your API URL
+  const API_URL = "https://server-rent-to-go.vercel.app"; // Update with your API URL
 
   useEffect(() => {
     fetchDashboardData();
