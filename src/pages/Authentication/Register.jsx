@@ -21,6 +21,7 @@ const Registration = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
+    setValue, // Added setValue for demo buttons
   } = useForm({
     defaultValues: {
       name: "",
@@ -131,6 +132,25 @@ const Registration = () => {
     }
   };
 
+  // Demo credential handlers
+  // const handleDemoUser = () => {
+  //   setValue("name", "Demo User");
+  //   setValue("photo", "https://i.ibb.co/2yL5LJ8/user-avatar.png");
+  //   setValue("email", "user@gmail.com");
+  //   setValue("password", "User@gmail.com");
+  //   setAuthError("");
+  //   setShowPass(false);
+  // };
+
+  // const handleDemoAdmin = () => {
+  //   setValue("name", "Admin");
+  //   setValue("photo", "https://i.ibb.co/7X8zQKP/admin-avatar.png");
+  //   setValue("email", "admin@gmail.com");
+  //   setValue("password", "Admin@gmail.com");
+  //   setAuthError("");
+  //   setShowPass(false);
+  // };
+
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-306px)] my-12">
       <div className="flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg lg:max-w-4xl">
@@ -152,6 +172,31 @@ const Registration = () => {
               Sign in with Google
             </span>
           </div>
+
+          {/* Demo Credential Buttons */}
+          {/* <div className="mt-4 space-y-2">
+            <p className="text-xs text-center text-gray-500 mb-2">
+              Quick Demo Access:
+            </p> */}
+
+          {/* Demo User Button */}
+          {/* <button
+              type="button"
+              className="w-full px-4 py-2 text-sm font-medium text-gray-700 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors duration-300 flex items-center justify-center gap-2"
+            >
+              <span>🎭</span>
+              <span>Demo User Login</span>
+            </button> */}
+
+          {/* Demo Admin Button */}
+          {/* <button
+              type="button"
+              className="w-full px-4 py-2 text-sm font-medium text-gray-700 bg-purple-50 border border-purple-200 rounded-lg hover:bg-purple-100 transition-colors duration-300 flex items-center justify-center gap-2"
+            >
+              <span>👑</span>
+              <span>Demo Admin Login</span>
+            </button>
+          </div> */}
 
           <div className="flex items-center justify-between mt-4">
             <span className="w-1/5 border-b lg:w-1/4"></span>

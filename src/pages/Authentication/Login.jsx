@@ -23,6 +23,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
+    setValue, // Added setValue for demo buttons
   } = useForm({
     defaultValues: {
       email: "",
@@ -89,6 +90,21 @@ const Login = () => {
     }
   };
 
+  // Demo credential handlers
+  const handleDemoUser = () => {
+    setValue("email", "user@gmail.com");
+    setValue("password", "User@gmail.com");
+    setAuthError("");
+    setShowPassword(false);
+  };
+
+  const handleDemoAdmin = () => {
+    setValue("email", "admin@gmail.com");
+    setValue("password", "Admin@gmail.com");
+    setAuthError("");
+    setShowPassword(false);
+  };
+
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-306px)] my-12">
       <div className="flex w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-lg lg:max-w-4xl">
@@ -106,12 +122,41 @@ const Login = () => {
 
           <div
             onClick={handleGoogleSignIn}
-            className="flex cursor-pointer items-center justify-center mt-4 transition-colors duration-300 transform border rounded-lg"
+            className="flex cursor-pointer items-center justify-center mt-4 transition-colors duration-300 transform border rounded-lg hover:bg-gray-50"
           >
-            <FcGoogle />
+            <div className="px-4 py-2">
+              <FcGoogle />
+            </div>
             <span className="w-5/6 px-4 py-3 font-bold text-center">
               Sign in with Google
             </span>
+          </div>
+
+          {/* Demo Credential Buttons */}
+          <div className="mt-4 space-y-2">
+            <p className="text-xs text-center text-gray-500 mb-2">
+              Quick Demo Access:
+            </p>
+
+            {/* Demo User Button */}
+            <button
+              type="button"
+              onClick={handleDemoUser}
+              className="w-full px-4 py-2 text-sm font-medium text-gray-700 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors duration-300 flex items-center justify-center gap-2"
+            >
+              <span>🎭</span>
+              <span>Demo User Login</span>
+            </button>
+
+            {/* Demo Admin Button */}
+            <button
+              type="button"
+              onClick={handleDemoAdmin}
+              className="w-full px-4 py-2 text-sm font-medium text-gray-700 bg-purple-50 border border-purple-200 rounded-lg hover:bg-purple-100 transition-colors duration-300 flex items-center justify-center gap-2"
+            >
+              <span>👑</span>
+              <span>Demo Admin Login</span>
+            </button>
           </div>
 
           <div className="flex items-center justify-between mt-4">
