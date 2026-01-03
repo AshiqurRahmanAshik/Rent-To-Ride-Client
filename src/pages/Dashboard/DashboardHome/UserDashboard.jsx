@@ -151,30 +151,183 @@ const UserDashboard = () => {
         </div>
 
         {/* Bookings Over Time - Line Chart */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
-            Booking Trends
-          </h2>
+        {/* Bookings Over Time - Enhanced Line Chart */}
+        <div className="bg-gradient-to-br from-white to-indigo-50 rounded-xl shadow-lg p-6 border border-indigo-100">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-800">
+                Booking Trends
+              </h2>
+              <p className="text-sm text-gray-500 mt-1">
+                Monthly booking activity overview
+              </p>
+            </div>
+            {bookingsByMonthData.length > 0 && (
+              <div className="bg-indigo-100 px-4 py-2 rounded-lg">
+                <p className="text-xs text-indigo-600 font-medium">
+                  Total Bookings
+                </p>
+                <p className="text-2xl font-bold text-indigo-700">
+                  {bookingsByMonthData.reduce(
+                    (sum, item) => sum + item.bookings,
+                    0
+                  )}
+                </p>
+              </div>
+            )}
+          </div>
+
           {bookingsByMonthData.length > 0 ? (
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={bookingsByMonthData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
+            <ResponsiveContainer width="100%" height={340}>
+              <LineChart
+                data={bookingsByMonthData}
+                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+              >
+                <defs>
+                  <linearGradient
+                    id="colorBookings"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+                  </linearGradient>
+                  <filter id="shadow" height="200%">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+                    <feOffset dx="0" dy="4" result="offsetblur" />
+                    <feComponentTransfer>
+                      <feFuncA type="linear" slope="0.2" />
+                    </feComponentTransfer>
+                    <feMerge>
+                      <feMergeNode />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
+
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke="#e0e7ff"
+                  vertical={false}
+                />
+
+                <XAxis
+                  dataKey="month"
+                  stroke="#6b7280"
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: "500",
+                  }}
+                  tickLine={false}
+                  axisLine={{ stroke: "#e5e7eb" }}
+                />
+
+                <YAxis
+                  stroke="#6b7280"
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: "500",
+                  }}
+                  tickLine={false}
+                  axisLine={{ stroke: "#e5e7eb" }}
+                  tickFormatter={(value) => value.toLocaleString()}
+                />
+
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "rgba(255, 255, 255, 0.98)",
+                    border: "2px solid #6366f1",
+                    borderRadius: "12px",
+                    boxShadow: "0 10px 25px -5px rgb(99 102 241 / 0.3)",
+                    padding: "12px 16px",
+                  }}
+                  labelStyle={{
+                    color: "#1f2937",
+                    fontWeight: "600",
+                    marginBottom: "4px",
+                  }}
+                  itemStyle={{
+                    color: "#6366f1",
+                    fontWeight: "500",
+                  }}
+                  cursor={{
+                    stroke: "#6366f1",
+                    strokeWidth: 2,
+                    strokeDasharray: "5 5",
+                  }}
+                />
+
+                <Legend
+                  wrapperStyle={{
+                    paddingTop: "20px",
+                    fontSize: "14px",
+                    fontWeight: "500",
+                  }}
+                  iconType="circle"
+                />
+
+                {/* Area fill under the line */}
+                <defs>
+                  <linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#6366f1" />
+                    <stop offset="50%" stopColor="#8b5cf6" />
+                    <stop offset="100%" stopColor="#ec4899" />
+                  </linearGradient>
+                </defs>
+
                 <Line
                   type="monotone"
                   dataKey="bookings"
-                  stroke="#8884d8"
-                  strokeWidth={2}
+                  stroke="url(#lineGradient)"
+                  strokeWidth={4}
+                  name="Bookings"
+                  dot={{
+                    fill: "#fff",
+                    stroke: "#6366f1",
+                    strokeWidth: 3,
+                    r: 6,
+                    filter: "url(#shadow)",
+                  }}
+                  activeDot={{
+                    r: 9,
+                    strokeWidth: 3,
+                    stroke: "#fff",
+                    fill: "#6366f1",
+                    filter: "url(#shadow)",
+                  }}
+                  fill="url(#colorBookings)"
                 />
               </LineChart>
             </ResponsiveContainer>
           ) : (
-            <p className="text-gray-500 text-center py-10">
-              No trend data available
-            </p>
+            <div className="flex flex-col items-center justify-center py-20">
+              <div className="relative">
+                <div className="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mb-4 animate-pulse">
+                  <svg
+                    className="w-10 h-10 text-indigo-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
+                    />
+                  </svg>
+                </div>
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-pink-500 rounded-full animate-ping"></div>
+              </div>
+              <p className="text-gray-600 font-semibold text-lg">
+                No booking trends yet
+              </p>
+              <p className="text-gray-400 text-sm mt-2 max-w-xs text-center">
+                Start accepting bookings to see your trends and growth over time
+              </p>
+            </div>
           )}
         </div>
       </div>

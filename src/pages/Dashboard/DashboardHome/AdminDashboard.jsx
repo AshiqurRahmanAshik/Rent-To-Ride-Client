@@ -205,42 +205,58 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Revenue Trends - Line Chart */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">
-          Revenue & Booking Trends
+      {/* Revenue Breakdown - Donut Chart */}
+      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">
+          Monthly Revenue Distribution
         </h2>
+
         {revenueChartData.length > 0 ? (
-          <ResponsiveContainer width="100%" height={350}>
-            <LineChart data={revenueChartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis yAxisId="left" />
-              <YAxis yAxisId="right" orientation="right" />
-              <Tooltip />
-              <Legend />
-              <Line
-                yAxisId="left"
-                type="monotone"
+          <ResponsiveContainer width="100%" height={400}>
+            <PieChart>
+              <Pie
+                data={revenueChartData}
+                cx="50%"
+                cy="50%"
+                labelLine={{
+                  stroke: "#6b7280",
+                  strokeWidth: 1,
+                }}
+                label={({ month, percent }) =>
+                  `${month} (${(percent * 100).toFixed(0)}%)`
+                }
+                outerRadius={140}
+                innerRadius={80}
+                fill="#8884d8"
                 dataKey="revenue"
-                stroke="#8884d8"
-                strokeWidth={2}
-                name="Revenue ($)"
+                paddingAngle={5}
+              >
+                {revenueChartData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                    stroke="#fff"
+                    strokeWidth={3}
+                  />
+                ))}
+              </Pie>
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#1f2937",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "8px",
+                  padding: "10px 15px",
+                }}
+                formatter={(value) => [`$${value.toLocaleString()}`, "Revenue"]}
               />
-              <Line
-                yAxisId="right"
-                type="monotone"
-                dataKey="bookings"
-                stroke="#82ca9d"
-                strokeWidth={2}
-                name="Bookings"
-              />
-            </LineChart>
+            </PieChart>
           </ResponsiveContainer>
         ) : (
-          <p className="text-gray-500 text-center py-10">
-            No trend data available
-          </p>
+          <div className="flex flex-col items-center justify-center py-16">
+            <div className="w-20 h-20 border-4 border-gray-200 border-t-purple-500 rounded-full animate-spin"></div>
+            <p className="text-gray-500 mt-4">Loading chart data...</p>
+          </div>
         )}
       </div>
 
