@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from "react";
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -9,16 +9,60 @@ import {
   signInWithPopup,
   signOut,
   updateProfile,
-} from 'firebase/auth';
-import { app } from '../firebase/firebase.config';
+} from "firebase/auth";
+import { app } from "../firebase/firebase.config";
+import axios from "axios"; // ✅ Added
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
+// ✅ Backend API URL - আপনার backend URL দিন
+const API_URL = "http://localhost:9000";
+
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // ✅ NEW: Sync user to backend and fetch role
+  const syncUserToBackend = async (firebaseUser) => {
+    if (!firebaseUser) return firebaseUser;
+
+    try {
+      console.log("🔄 Syncing user to backend...");
+
+      // Create/Update user in backend
+      await axios.post(`${API_URL}/users`, {
+        email: firebaseUser.email,
+        name: firebaseUser.displayName || firebaseUser.email.split("@")[0],
+        photoURL: firebaseUser.photoURL || "",
+        role: "user", // Default role
+      });
+
+      // Fetch user with role from backend
+      const response = await axios.get(`${API_URL}/user/${firebaseUser.email}`);
+
+      // Add role to user object
+      const userWithRole = {
+        ...firebaseUser,
+        role: response.data.role || "user",
+        uid: firebaseUser.uid,
+        email: firebaseUser.email,
+        displayName: firebaseUser.displayName,
+        photoURL: firebaseUser.photoURL,
+      };
+
+      console.log("✅ User synced successfully. Role:", userWithRole.role);
+      return userWithRole;
+    } catch (error) {
+      console.error("❌ Failed to sync user:", error.message);
+      // If sync fails, return user without role
+      return {
+        ...firebaseUser,
+        role: "user", // Default role
+      };
+    }
+  };
 
   // Create new user
   const createUser = (email, password) => {
@@ -50,9 +94,10 @@ const AuthProvider = ({ children }) => {
       displayName: name,
       photoURL: photo,
     }).then(async () => {
-      // 👇 Refresh user instantly after update
+      // Refresh user instantly after update
       await auth.currentUser.reload();
-      setUser({ ...auth.currentUser });
+      const updatedUser = await syncUserToBackend(auth.currentUser);
+      setUser(updatedUser);
     });
   };
 
@@ -60,15 +105,23 @@ const AuthProvider = ({ children }) => {
   const refreshUser = async () => {
     if (auth.currentUser) {
       await auth.currentUser.reload();
-      setUser({ ...auth.currentUser });
+      const refreshedUser = await syncUserToBackend(auth.currentUser);
+      setUser(refreshedUser);
     }
   };
 
-  // Listen for auth changes
+  // ✅ Listen for auth changes with backend sync
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      console.log('CurrentUser -->', currentUser);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        // Sync user to backend and get role
+        const userWithRole = await syncUserToBackend(currentUser);
+        setUser(userWithRole);
+        console.log("CurrentUser -->", userWithRole);
+      } else {
+        setUser(null);
+        console.log("User logged out");
+      }
       setLoading(false);
     });
     return () => unsubscribe();
@@ -84,7 +137,7 @@ const AuthProvider = ({ children }) => {
     signInWithGoogle,
     logOut,
     updateUserProfile,
-    refreshUser, // 👈 exported for flexibility
+    refreshUser,
   };
 
   return (

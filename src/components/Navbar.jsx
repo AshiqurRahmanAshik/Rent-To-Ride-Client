@@ -173,6 +173,17 @@ const Navbar = () => {
               <li>
                 <span className="text-sm opacity-70">{user.email}</span>
               </li>
+              {/* ✅ Dashboard Link in Dropdown - Added */}
+              <li>
+                <NavLink
+                  to="/dashboard"
+                  className={`w-full text-left py-1 rounded ${
+                    theme === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-200"
+                  }`}
+                >
+                  📊 Dashboard
+                </NavLink>
+              </li>
               <li>
                 <button
                   onClick={handleProfileUpdate}
@@ -257,6 +268,21 @@ const Navbar = () => {
                   Browse Cars
                 </NavLink>
               </li>
+
+              {/* ✅ Dashboard Link for Mobile - Added */}
+              {user && (
+                <li>
+                  <NavLink
+                    to="/dashboard"
+                    className={({ isActive }) =>
+                      isActive ? activeClass : normalClass
+                    }
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    📊 Dashboard
+                  </NavLink>
+                </li>
+              )}
 
               {/* Theme Toggle */}
               <li>

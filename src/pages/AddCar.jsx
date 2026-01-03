@@ -1,19 +1,19 @@
-import { useState, useContext } from 'react';
-import { AuthContext } from '../providers/AuthProvider';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import { useState, useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const AddCar = ({ onCarAdded }) => {
   const { user } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
-    name: '',
-    model: '',
-    description: '',
-    category: 'Select Category',
-    pricePerDay: '',
-    location: '',
-    image: '',
+    name: "",
+    model: "",
+    description: "",
+    category: "Select Category",
+    pricePerDay: "",
+    location: "",
+    image: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -35,10 +35,10 @@ const AddCar = ({ onCarAdded }) => {
       !pricePerDay ||
       !location ||
       !image ||
-      category === 'Select Category'
+      category === "Select Category"
     ) {
       return toast.error(
-        'Please fill in all required fields and select a category!'
+        "Please fill in all required fields and select a category!"
       );
     }
 
@@ -46,7 +46,7 @@ const AddCar = ({ onCarAdded }) => {
       ...formData,
       providerName: user?.displayName,
       providerEmail: user?.email,
-      status: 'Available',
+      status: "Available",
     };
 
     try {
@@ -56,21 +56,21 @@ const AddCar = ({ onCarAdded }) => {
         newCar
       );
 
-      toast.success('Car added successfully!');
+      toast.success("Car added successfully!");
       if (onCarAdded) onCarAdded(data);
 
       setFormData({
-        name: '',
-        model: '',
-        description: '',
-        category: 'Select Category',
-        pricePerDay: '',
-        location: '',
-        image: '',
+        name: "",
+        model: "",
+        description: "",
+        category: "Select Category",
+        pricePerDay: "",
+        location: "",
+        image: "",
       });
     } catch (error) {
       console.error(error);
-      toast.error('Failed to add car.');
+      toast.error("Failed to add car.");
     } finally {
       setLoading(false);
     }
@@ -176,7 +176,7 @@ const AddCar = ({ onCarAdded }) => {
           className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-500 disabled:opacity-50"
           disabled={loading}
         >
-          {loading ? 'Adding...' : 'Add Car'}
+          {loading ? "Adding..." : "Add Car"}
         </button>
       </form>
     </div>
