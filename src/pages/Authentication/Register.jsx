@@ -207,7 +207,6 @@ const Registration = () => {
                 {...register("photo", {
                   required: "Photo URL is required",
                   pattern: {
-                    value: /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp|svg)$/i,
                     message: "Please enter a valid image URL",
                   },
                 })}
